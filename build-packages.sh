@@ -11,6 +11,11 @@ set -euo pipefail
 #   --index-only  skip the local builds and only import/regenerate the repo
 #                 (use when an external artifact changed, e.g. x-scripts).
 #
+# Signing (optional, recommended): export X_REPO_SIGN_KEY=<gpg-keyid>. With it
+# the packages are signed, repo-add runs with -s, SHA256SUMS is signed and the
+# keyring (trustedkeys.gpg + signing.pub) is exported. Without it the repo is
+# published unsigned and a warning is printed. See docs/en/signing.md.
+#
 # x-scripts lives in the sibling `scripts` repo (scripts/packaging/). When a
 # fresh `../scripts/packaging/x-scripts-*.pkg.tar.zst` exists it is imported
 # automatically and removed from the build directory.
@@ -26,12 +31,15 @@ XPM_DIR="public/x/x86_64"
 OUT_DIR="$(mktemp -d)"
 trap 'rm -rf "$OUT_DIR"' EXIT
 
+# Optional GPG key id for signing (see docs/en|es/signing.md).
+SIGN_KEY="${X_REPO_SIGN_KEY:-}"
+
 BUILD=1
 for arg in "$@"; do
     case "$arg" in
         --index-only) BUILD=0 ;;
         -h|--help)
-            sed -n '2,18p' "$SELF" | sed 's/^# \{0,1\}//'
+            sed -n '2,17p' "$SELF" | sed 's/^# \{0,1\}//'
             exit 0
             ;;
         *)
@@ -45,7 +53,11 @@ done
 build_pkgbuild() {
     local dir="$1"
     echo "  - building $dir"
-    (cd "packages/$dir" && makepkg -cf --noconfirm)
+    if [[ -n "$SIGN_KEY" ]]; then
+        (cd "packages/$dir" && makepkg -cf --noconfirm --sign --key "$SIGN_KEY")
+    else
+        (cd "packages/$dir" && makepkg -cf --noconfirm)
+    fi
 }
 
 # Packages built with XBUILD (xpkg) -> xpm .xp
@@ -95,12 +107,27 @@ echo "== Regenerating pacman database =="
 # entries for packages that no longer exist (repo-add -n would keep them).
 cd "$REPO_DIR"
 rm -f x.db x.files x.db.tar.gz x.files.tar.gz x.db.tar.gz.old x.files.tar.gz.old
-repo-add -R x.db.tar.gz *.pkg.tar.zst
+REPO_ADD=(repo-add -R)
+if [[ -n "$SIGN_KEY" ]]; then
+    echo "  signing database with key $SIGN_KEY"
+    REPO_ADD+=(-s -k "$SIGN_KEY")
+else
+    echo "  WARNING: X_REPO_SIGN_KEY unset; publishing an UNSIGNED repo ([x] stays Optional/TrustAll)"
+fi
+"${REPO_ADD[@]}" x.db.tar.gz *.pkg.tar.zst
 rm -f x.db x.files
 cp x.db.tar.gz x.db
 cp x.files.tar.gz x.files
 sha256sum * > SHA256SUMS
 rm -f x.db.tar.gz.old x.files.tar.gz.old
+
+if [[ -n "$SIGN_KEY" ]]; then
+    rm -f SHA256SUMS.sig trustedkeys.gpg signing.pub
+    gpg --batch --yes --local-user "$SIGN_KEY" --detach-sign SHA256SUMS
+    gpg --batch --yes --export "$SIGN_KEY" > trustedkeys.gpg
+    gpg --batch --yes --armor --export "$SIGN_KEY" > signing.pub
+    echo "  exported keyring: trustedkeys.gpg + signing.pub (+ SHA256SUMS.sig)"
+fi
 
 echo "== Done =="
 echo "Commit public/repo/x86_64/ and push, then run the deploy workflow."
