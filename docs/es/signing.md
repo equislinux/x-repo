@@ -66,3 +66,29 @@ tanto, el ISO mantiene `Optional TrustAll`.
   el keyring al menos un ciclo de release.
 - Nunca borres firmas viejas antes de que los clientes tengan la clave nueva.
 - Anunciá el cambio de fingerprint en el changelog.
+
+## 6. Cambiar la clave (planificado o emergencia)
+
+Las claves no son para siempre; el cambio es una operación normal si se
+planifica:
+
+1. **Al crearla**: guardá un backup offline de la clave secreta **y un
+   certificado de revocación** (`gpg --gen-revoke "$KEYID" > revoke.asc`,
+   aparte). Perder la clave *sin* certificado de revocación es el único
+   escenario realmente complicado.
+2. **Cambio planificado**: generá la clave nueva, **firmala con la vieja**
+   (prueba continuidad para los clientes que confían en la anterior),
+   publicá ambas en `trustedkeys.gpg`, re-firmá DB/paquetes con la nueva y
+   mantené la vieja en el keyring al menos un ciclo antes de sacarla.
+3. **Compromiso**: publicá el certificado de revocación de la vieja, publicá
+   la nueva, re-firmá todo y distribuí el keyring como en (2). Los
+   consumidores en `Optional` no se ven afectados; los de `Required`
+   necesitan el keyring nuevo antes del primer paquete firmado con la nueva.
+4. **Pérdida (sin compromiso)**: igual que el cambio planificado; las firmas
+   viejas siguen válidas, solo no podés firmar updates nuevos hasta
+   distribuir la clave nueva.
+
+Como las firmas se publican pero `[x]` sigue en `Optional` durante el
+desarrollo, un cambio de clave no rompe a nadie. Pasá a `Required` recién
+cuando el camino de distribución del keyring (ISO + paquete `x-keyring`
+actualizable) esté listo.

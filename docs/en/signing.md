@@ -67,3 +67,28 @@ that lands, keep `Optional TrustAll` on the ISO.
   the keyring for at least one release cycle.
 - Never delete old package signatures before clients have the new key.
 - Announce the fingerprint change in the changelog.
+
+## 6. Changing the key (planned or emergency)
+
+Keys are not forever; a change is a normal maintenance operation if you plan
+for it:
+
+1. **At creation**: keep an offline backup of the secret key **and a
+   revocation certificate** (`gpg --gen-revoke "$KEYID" > revoke.asc`, stored
+   separately). Losing the key *without* a revocation certificate is the only
+   really messy scenario.
+2. **Planned change**: generate the new key, **cross-sign** it with the old
+   one (proves continuity to clients that trust the old key), publish both in
+   `trustedkeys.gpg`, re-sign the DB/packages with the new key and keep the
+   old key in the keyring for at least one release cycle before dropping it.
+3. **Compromise**: publish the old key's revocation certificate, publish the
+   new key, re-sign everything and distribute the updated keyring as in (2).
+   Consumers on `Optional` are unaffected; `Required` consumers need the
+   keyring update before the first new-key package.
+4. **Lost (not compromised)**: same as a planned change; old signatures stay
+   valid, you just cannot sign new updates until the new key is distributed.
+
+Because signatures are published while `[x]` stays `Optional` during
+development, a key change breaks nobody. Flip to `Required` only when the
+keyring distribution path (ISO + an updatable `x-keyring` package) is in
+place.
