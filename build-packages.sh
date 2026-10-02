@@ -107,6 +107,15 @@ echo "== Regenerating pacman database =="
 # entries for packages that no longer exist (repo-add -n would keep them).
 cd "$REPO_DIR"
 rm -f x.db x.files x.db.tar.gz x.files.tar.gz x.db.tar.gz.old x.files.tar.gz.old
+if [[ -n "$SIGN_KEY" ]]; then
+    # Sign every package payload too (makepkg --sign only covers the locally
+    # built ones; imported packages like x-scripts need this).
+    echo "  signing package files with key $SIGN_KEY"
+    for p in *.pkg.tar.zst; do
+        rm -f "$p.sig"
+        gpg --batch --yes --local-user "$SIGN_KEY" --detach-sign "$p"
+    done
+fi
 REPO_ADD=(repo-add -R)
 if [[ -n "$SIGN_KEY" ]]; then
     echo "  signing database with key $SIGN_KEY"
@@ -118,6 +127,14 @@ fi
 rm -f x.db x.files
 cp x.db.tar.gz x.db
 cp x.files.tar.gz x.files
+# pacman fetches x.db / x.db.sig: mirror the repo-add signature to that name.
+# x.db may be a symlink to x.db.tar.gz, in which case they are the same file.
+if [[ -n "$SIGN_KEY" && -f x.db.tar.gz.sig ]]; then
+    cp -f x.db.tar.gz.sig x.db.sig 2>/dev/null || true
+fi
+if [[ -n "$SIGN_KEY" && -f x.files.tar.gz.sig ]]; then
+    cp -f x.files.tar.gz.sig x.files.sig 2>/dev/null || true
+fi
 sha256sum * > SHA256SUMS
 rm -f x.db.tar.gz.old x.files.tar.gz.old
 
