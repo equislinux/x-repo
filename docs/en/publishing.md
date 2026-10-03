@@ -69,7 +69,8 @@ The script:
    repo-add -R x.db.tar.gz *.pkg.tar.zst
    cp x.db.tar.gz x.db
    cp x.files.tar.gz x.files
-   sha256sum * > SHA256SUMS
+   rm -f SHA256SUMS SHA256SUMS.sig
+   sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
    ```
 
 Do not edit `x.db` or `SHA256SUMS` by hand; always regenerate them with this script
@@ -128,3 +129,10 @@ The updated packages are now served at:
 - Keep the repository in sync with its consumers: `x-release` and `x-dev` are
   installed from this repo during the X distro install, and `x-scripts` must match
   the payload revision expected by the installer.
+
+### Signing
+
+The repository is published **unsigned** by default (development mode, `[x]`
+uses `Optional TrustAll`). See [Signing](signing.md) for the key setup, the
+`X_REPO_SIGN_KEY` support in `build-packages.sh`, the keyring export
+(`trustedkeys.gpg` + `signing.pub`) and the consumer-side `SigLevel`.

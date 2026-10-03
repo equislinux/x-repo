@@ -69,7 +69,8 @@ El script:
    repo-add -R x.db.tar.gz *.pkg.tar.zst
    cp x.db.tar.gz x.db
    cp x.files.tar.gz x.files
-   sha256sum * > SHA256SUMS
+   rm -f SHA256SUMS SHA256SUMS.sig
+   sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
    ```
 
 No edites `x.db` ni `SHA256SUMS` a mano; regenéralos siempre con este script (las
@@ -130,3 +131,10 @@ Los paquetes actualizados quedan servidos en:
 - Mantén el repositorio sincronizado con sus consumidores: `x-release` y `x-dev` se
   instalan desde este repo durante la instalación de la distro X, y `x-scripts` debe
   coincidir con la revisión del payload que espera el instalador.
+
+### Firma
+
+El repositorio se publica **sin firmar** por defecto (modo desarrollo, `[x]`
+usa `Optional TrustAll`). Ver [Firma](signing.md) para crear la clave, el
+soporte de `X_REPO_SIGN_KEY` en `build-packages.sh`, la exportación del keyring
+(`trustedkeys.gpg` + `signing.pub`) y el `SigLevel` del lado consumidor.

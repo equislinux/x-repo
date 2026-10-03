@@ -97,7 +97,8 @@ jobs:
 
           (
             cd public/x/x86_64
-            sha256sum * > SHA256SUMS
+            rm -f SHA256SUMS SHA256SUMS.sig
+sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
           )
 
       - name: Upload x endpoint artifact
