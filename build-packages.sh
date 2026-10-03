@@ -135,7 +135,10 @@ fi
 if [[ -n "$SIGN_KEY" && -f x.files.tar.gz.sig ]]; then
     cp -f x.files.tar.gz.sig x.files.sig 2>/dev/null || true
 fi
-sha256sum * > SHA256SUMS
+# Hash the publishable artifacts. Never include SHA256SUMS itself (or its
+# stale signature): a self-referencing checksum can never verify.
+rm -f SHA256SUMS SHA256SUMS.sig
+sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
 rm -f x.db.tar.gz.old x.files.tar.gz.old
 
 if [[ -n "$SIGN_KEY" ]]; then

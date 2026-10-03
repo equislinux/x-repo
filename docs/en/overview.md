@@ -36,6 +36,10 @@ Two packaging paths coexist in the ecosystem:
   ready but the automated native workflow is **pending** (see
   `docs/build-x-native-workflow.md`).
 
+> **Note:** until that workflow is revived, the `.xp` files under `public/x/`
+> are legacy artifacts and can lag behind the versions published in the
+> pacman-facing `public/repo/` (the `[x]` repository is the supported path).
+
 ## What lives in this repository
 
 | Path | Purpose |

@@ -93,7 +93,8 @@ repo-add -R x.db.tar.gz *.pkg.tar.zst
 rm -f x.db x.files
 cp x.db.tar.gz x.db
 cp x.files.tar.gz x.files
-sha256sum * > SHA256SUMS
+rm -f SHA256SUMS SHA256SUMS.sig
+sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
 ```
 
 - `repo-add` creates `x.db.tar.gz` and `x.files.tar.gz` from the `.pkg.tar.zst` files.

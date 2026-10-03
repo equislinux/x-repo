@@ -69,7 +69,8 @@ El script:
    repo-add -R x.db.tar.gz *.pkg.tar.zst
    cp x.db.tar.gz x.db
    cp x.files.tar.gz x.files
-   sha256sum * > SHA256SUMS
+   rm -f SHA256SUMS SHA256SUMS.sig
+   sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
    ```
 
 No edites `x.db` ni `SHA256SUMS` a mano; regenéralos siempre con este script (las

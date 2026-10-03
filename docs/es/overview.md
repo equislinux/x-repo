@@ -37,6 +37,10 @@ Coexisten dos vías de empaquetado en el ecosistema:
   listo, pero el workflow nativo automatizado está **pendiente** (ver
   `docs/build-x-native-workflow.md`).
 
+> **Nota:** hasta que ese flujo se reactive, los `.xp` de `public/x/` son
+> artefactos legacy y pueden quedar atrás respecto de las versiones publicadas
+> en `public/repo/` (el repo `[x]` de pacman es la vía soportada).
+
 ## Qué contiene este repositorio
 
 | Ruta | Propósito |
