@@ -132,7 +132,8 @@ The updated packages are now served at:
 
 ### Signing
 
-The repository is published **unsigned** by default (development mode, `[x]`
-uses `Optional TrustAll`). See [Signing](signing.md) for the key setup, the
-`X_REPO_SIGN_KEY` support in `build-packages.sh`, the keyring export
-(`trustedkeys.gpg` + `signing.pub`) and the consumer-side `SigLevel`.
+The repository is published **signed** with the project key (`X_REPO_SIGN_KEY`
+in `build-packages.sh`). The live ISO and installed target use
+`SigLevel = Required` and embed the key at `/etc/pacman.d/x-repo.pub`. See
+[Signing](signing.md) for the key setup, the keyring export
+(`trustedkeys.gpg` + `signing.pub`) and rotation.

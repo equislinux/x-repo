@@ -121,7 +121,7 @@ if [[ -n "$SIGN_KEY" ]]; then
     echo "  signing database with key $SIGN_KEY"
     REPO_ADD+=(-s -k "$SIGN_KEY")
 else
-    echo "  WARNING: X_REPO_SIGN_KEY unset; publishing an UNSIGNED repo ([x] stays Optional/TrustAll)"
+    echo "  WARNING: X_REPO_SIGN_KEY unset; publishing an UNSIGNED repo (the ISO/target expect [x] signed with the project key)"
 fi
 "${REPO_ADD[@]}" x.db.tar.gz *.pkg.tar.zst
 rm -f x.db x.files

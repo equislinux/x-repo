@@ -134,7 +134,8 @@ Los paquetes actualizados quedan servidos en:
 
 ### Firma
 
-El repositorio se publica **sin firmar** por defecto (modo desarrollo, `[x]`
-usa `Optional TrustAll`). Ver [Firma](signing.md) para crear la clave, el
-soporte de `X_REPO_SIGN_KEY` en `build-packages.sh`, la exportación del keyring
-(`trustedkeys.gpg` + `signing.pub`) y el `SigLevel` del lado consumidor.
+El repositorio se publica **firmado** con la clave del proyecto
+(`X_REPO_SIGN_KEY` en `build-packages.sh`). El ISO live y el destino instalado
+usan `SigLevel = Required` y embarcan la clave en `/etc/pacman.d/x-repo.pub`.
+Ver [Firma](signing.md) para crear la clave, la exportación del keyring
+(`trustedkeys.gpg` + `signing.pub`) y la rotación.

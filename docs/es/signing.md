@@ -1,8 +1,12 @@
 # x-repo — firmar el repositorio `[x]`
 
-Estado actual: el repositorio se publica **sin firmar** y los consumidores usan
-`SigLevel = Optional TrustAll` (modo desarrollo). Este runbook es el camino a
-firmas requeridas. Es un procedimiento local/offline: no requiere CI.
+Estado actual: el repositorio se publica **firmado** y el ISO live y el destino
+instalado confían en la clave del proyecto (`SigLevel = Required`; la clave
+vive en `/etc/pacman.d/x-repo.pub` y la importan + firman localmente
+`customize_airootfs.sh` e `install.sh`). El host de build (`x/pacman.conf`,
+usado por `mkarchiso`) usa `SigLevel = Never` para `[x]` porque el keyring del
+host puede no tener la clave del proyecto. Es un procedimiento local/offline:
+no requiere CI.
 
 ## 0. Crear la clave (una sola vez, secreta offline)
 
@@ -54,11 +58,17 @@ sudo pacman-key --lsign-key "$KEYID"
 Para `xpm`: keyring binario en `/etc/xpm/gnupg/trustedkeys.gpg` y
 `sig_level = "required"` (documentado en `xlnux/xpm`).
 
-## 4. Integración en ISO/destino (seguimiento, P1.7)
+## 4. Integración en ISO/destino (hecho)
 
-Empaquetar `signing.pub`/keyring en `airootfs` y en el destino, y recién ahí
-pasar `x/pacman.conf` y el bloque `[x]` del instalador a `Required`. Mientras
-tanto, el ISO mantiene `Optional TrustAll`.
+El ISO embarca `airootfs/etc/pacman.d/x-repo.pub`. El keyring live vive en un
+tmpfs que `pacman-init.service` recrea, así que `x-keyring.service` vuelve a
+agregar y firmar localmente la clave después de él en cada boot; `install.sh`
+repite los pasos de forma idempotente (keyrings live y del destino) antes de
+`pacstrap`, que verifica la base `[x]` firmada contra el keyring live. El
+destino recibe su propio keyring (`--gpgdir /mnt/etc/pacman.d/gnupg`) y
+`SigLevel = Required`. Tras rotar la clave, re-corré
+`x/tests/e2e-autoinstall.py` para revalidar la instalación desatendida contra
+el repositorio firmado.
 
 ## 5. Rotación
 
