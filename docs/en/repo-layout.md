@@ -47,11 +47,11 @@ Only these two are built by `build-packages.sh` from their `PKGBUILD` today.
 repo `xlnux/scripts` under `scripts/packaging/` and packages the whole provisioning
 payload (phases, CLI `x`, configs). The resulting tarball is built there and **imported**
 into this repo, committed under `public/repo/x86_64/` (currently
-`x-scripts-0.1.0-13-any.pkg.tar.zst`).
+`x-scripts-0.1.0-23-any.pkg.tar.zst`).
 
 - There is no `packages/x-scripts/` source directory here.
 - The published artifact and the `PKGBUILD` in `scripts/packaging/` are aligned at
-  `0.1.0-13` (the equisdots desktop snapshot). `build-packages.sh` imports the
+  `0.1.0-23` (the equisdots desktop snapshot). `build-packages.sh` imports the
   sibling build automatically; re-run it when republishing the payload.
 
 ### Prebuilt artifacts, no sources
@@ -70,7 +70,7 @@ This directory is the pacman-facing repository. Files present:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Package database (`x.db` is the uncompressed copy of `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | File-list database for `pacman -F`. |
-| `*.pkg.tar.zst` | The packages: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-13`, `xpm-0.1.0-3`. |
+| `*.pkg.tar.zst` | The packages: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-23`, `xpm-0.1.0-3`. |
 | `SHA256SUMS` | Checksums over every file in the directory. |
 | `signing.pub`, `trustedkeys.gpg` | Signing/trust material consumed by the native endpoint. |
 
