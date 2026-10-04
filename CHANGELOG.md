@@ -5,6 +5,8 @@ All notable changes to the x-repo project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **xfetch-git / xtop-git**: first signed publication of the X system tools
+  (`xscriptordev/xfetch`, `xscriptordev/xtop`); installed by the X base.
 - **x-scripts 0.1.0-23**: published signed (LICENSE MIT + audited deps); the
   0.1.0-22 artifact is retired.
 
