@@ -3,7 +3,8 @@
 Current state: the repository is published **signed** and the live ISO and the
 installed target trust the project key (`SigLevel = Required`; the key lives at
 `/etc/pacman.d/x-repo.pub` and is imported + locally signed by
-`customize_airootfs.sh` and `install.sh`). The build host (`x/pacman.conf`,
+`x-keyring.service` (live, after `pacman-init.service`) and `install.sh`
+(target)). The build host (`x/pacman.conf`,
 used by `mkarchiso`) uses `SigLevel = Never` for `[x]` because the host keyring
 may not have the project key. This is a local/offline procedure: no CI
 required.

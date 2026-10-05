@@ -3,7 +3,8 @@
 Estado actual: el repositorio se publica **firmado** y el ISO live y el destino
 instalado confían en la clave del proyecto (`SigLevel = Required`; la clave
 vive en `/etc/pacman.d/x-repo.pub` y la importan + firman localmente
-`customize_airootfs.sh` e `install.sh`). El host de build (`x/pacman.conf`,
+`x-keyring.service` (live, después de `pacman-init.service`) e `install.sh`
+(destino)). El host de build (`x/pacman.conf`,
 usado por `mkarchiso`) usa `SigLevel = Never` para `[x]` porque el keyring del
 host puede no tener la clave del proyecto. Es un procedimiento local/offline:
 no requiere CI.
