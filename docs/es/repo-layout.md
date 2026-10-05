@@ -39,8 +39,13 @@ El README señala que mientras `PKGBUILD` se mantiene para el tooling legacy de 
   `/usr/bin/x-dev-env` y helpers bajo `/usr/share/x-dev/` (aliases de shell, scripts
   de setup de NVIDIA/QEMU/Node). Depende de `zsh git base-devel curl wget`.
   `install=x-dev.install` ejecuta la lógica post-instalación.
+- **`opencode-bin`** — binario oficial precompilado del CLI opencode
+  (`anomalyco/opencode`, `1.18.34`), redistribuido para que `agents=yes` y los
+  usuarios de `x agent` tengan agente sin recurrir a AUR.
+  `provides`/`conflicts` `opencode`; el tarball va verificado por checksum en el
+  PKGBUILD.
 
-Hoy solo estos dos se construyen desde su `PKGBUILD` con `build-packages.sh`.
+Estos paquetes se construyen hoy desde su `PKGBUILD` con `build-packages.sh`.
 
 ### x-scripts: artefacto importado, sin fuente aquí
 

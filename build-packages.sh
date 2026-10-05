@@ -6,8 +6,9 @@ set -euo pipefail
 #
 # Usage: ./build-packages.sh [--index-only]
 #
-#   (no flags)    rebuild every PKGBUILD package (x-release, x-dev), import the
-#                 sibling x-scripts build when present, regenerate the database.
+#   (no flags)    rebuild every PKGBUILD package (x-release, x-dev, opencode-bin),
+#                 import the sibling x-scripts build when present, regenerate the
+#                 database.
 #   --index-only  skip the local builds and only import/regenerate the repo
 #                 (use when an external artifact changed, e.g. x-scripts).
 #
@@ -72,6 +73,7 @@ if [[ "$BUILD" == "1" ]]; then
     echo "== Building packages locally =="
     build_pkgbuild x-release
     build_pkgbuild x-dev
+    build_pkgbuild opencode-bin
 else
     echo "== Skipping local builds (--index-only) =="
 fi
@@ -90,7 +92,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in x-release x-dev; do
+    for dir in x-release x-dev opencode-bin; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"

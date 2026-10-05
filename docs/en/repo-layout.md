@@ -38,8 +38,12 @@ native path for `xpkg`/`xpm`.
   `/usr/bin/x-dev-env` and helpers under `/usr/share/x-dev/` (shell aliases,
   NVIDIA/QEMU/Node setup scripts). Depends on `zsh git base-devel curl wget`.
   `install=x-dev.install` runs the post-install logic.
+- **`opencode-bin`** — official prebuilt binary of the opencode CLI
+  (`anomalyco/opencode`, `1.18.34`), redistributed so `agents=yes` and
+  `x agent` users get a working agent without AUR. `provides`/`conflicts`
+  `opencode`; the tarball is checksummed in the PKGBUILD.
 
-Only these two are built by `build-packages.sh` from their `PKGBUILD` today.
+These packages are built by `build-packages.sh` from their `PKGBUILD` today.
 
 ### x-scripts: imported artifact, no source here
 
