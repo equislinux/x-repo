@@ -109,7 +109,7 @@ directly. Merge to `main` once CI/validation passes.
 
 After the changes are on `main`, deploy the site so the new repository files go live:
 
-1. Go to the **Actions** tab of `xlnux/x-repo`.
+1. Go to the **Actions** tab of `equislinux/x-repo`.
 2. Run the **"Deploy Website to GitHub Pages"** workflow (`build.yml`) manually via
    `workflow_dispatch`.
 3. The workflow runs `npm ci && npm run build` (static export of the Next.js site
@@ -118,7 +118,7 @@ After the changes are on `main`, deploy the site so the new repository files go 
 
 The updated packages are now served at:
 
-- `https://xlnux.github.io/x-repo/repo/x86_64/` (pacman `[x]` repo)
+- `https://equislinux.github.io/x-repo/repo/x86_64/` (pacman `[x]` repo)
 
 ### Caveats
 

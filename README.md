@@ -13,7 +13,7 @@
     <img alt="License" src="https://img.shields.io/badge/license-GPL--3.0-blue.svg">
     <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white">
     <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white">
-    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/xlnux/x-repo/build.yml?branch=main&label=CI">
+    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/equislinux/x-repo/build.yml?branch=main&label=CI">
     <img alt="Website" src="https://img.shields.io/badge/website-xscriptor.io-8B5CF6">
 </p>
 
@@ -43,7 +43,7 @@
 
 <h2 align="center" id="website"> Website </h2>
 
-<p>The portal is one static page: centered links to every xlnux repository plus a short explanation of the artifacts served from here. It is deployed together with the packages:</p>
+<p>The portal is one static page: centered links to every equislinux repository plus a short explanation of the artifacts served from here. It is deployed together with the packages:</p>
 <ul>
   <li><b>Next.js 16</b> — React framework with the App Router and static export.</li>
   <li><b>Tailwind CSS 4</b> — Styling with the X palette defined in <code>app/globals.css</code>.</li>
@@ -125,7 +125,7 @@
 <div align="center">
 <h2 align="center" id="x">X</h2>
 
-<a href="https://github.com/xlnux">XGitHub</a> &middot;
+<a href="https://github.com/equislinux">XGitHub</a> &middot;
 <a href="https://xscriptor.io">XWeb</a>
 </div>
-- Documentation: https://github.com/xlnux/wiki
+- Documentation: https://github.com/equislinux/wiki

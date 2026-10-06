@@ -3,15 +3,15 @@
 import { XDecryptedText } from '@xscriptor/xcomponents';
 
 const REPOS = [
-  'xlnux/x',
-  'xlnux/wsl',
-  'xlnux/wiki',
-  'xlnux/wsl-scripts',
-  'xlnux/scripts',
-  'xlnux/xpm',
-  'xlnux/xpkg',
-  'xlnux/web',
-  'xlnux/x-repo',
+  'equislinux/x',
+  'equislinux/wsl',
+  'equislinux/wiki',
+  'equislinux/wsl-scripts',
+  'equislinux/scripts',
+  'equislinux/xpm',
+  'equislinux/xpkg',
+  'equislinux/web',
+  'equislinux/x-repo',
 ];
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-14 px-6 py-16 text-center">
       <div className="space-y-10">
         <a
-          href="https://github.com/xlnux"
+          href="https://github.com/equislinux"
           target="_blank"
           rel="noreferrer"
           className="text-sm tracking-[0.3em] text-X-gray transition-colors hover:text-X-cyan"

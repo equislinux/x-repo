@@ -111,7 +111,7 @@ el PR directamente. Fusiona a `main` cuando pase la validación.
 Cuando los cambios estén en `main`, despliega el sitio para que los archivos nuevos del
 repo salgan en producción:
 
-1. Ve a la pestaña **Actions** de `xlnux/x-repo`.
+1. Ve a la pestaña **Actions** de `equislinux/x-repo`.
 2. Ejecuta manualmente el workflow **"Deploy Website to GitHub Pages"** (`build.yml`)
    mediante `workflow_dispatch`.
 3. El workflow ejecuta `npm ci && npm run build` (export estático del sitio Next.js
@@ -120,7 +120,7 @@ repo salgan en producción:
 
 Los paquetes actualizados quedan servidos en:
 
-- `https://xlnux.github.io/x-repo/repo/x86_64/` (repo `[x]` de pacman)
+- `https://equislinux.github.io/x-repo/repo/x86_64/` (repo `[x]` de pacman)
 
 ### Advertencias
 
