@@ -19,7 +19,7 @@
 #   X_REPO_SIGN_KEY / GNUPGHOME   project signing material (keys/env.sh)
 #   SF_USER      SourceForge account             (default: xscriptor)
 #   SF_KEY       SSH key for frs.sourceforge.net (default: ~/.ssh/id_ed25519_sourceforge)
-#   SF_PATH      remote FRS directory            (default: /home/frs/project/xlnux/iso)
+#   SF_PATH      remote FRS directory            (default: /home/frs/project/equislinux/iso)
 set -euo pipefail
 
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -33,7 +33,7 @@ UPLOAD=1
 VERIFY=0
 SF_USER="${SF_USER:-xscriptor}"
 SF_KEY="${SF_KEY:-$HOME/.ssh/id_ed25519_sourceforge}"
-SF_PATH="${SF_PATH:-/home/frs/project/xlnux/iso}"
+SF_PATH="${SF_PATH:-/home/frs/project/equislinux/iso}"
 
 usage() {
     sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'
@@ -140,7 +140,7 @@ RELEASES="$WEB_DIR/data/releases.json"
 if [[ ! -f "$RELEASES" ]]; then
     log "warning: $RELEASES not found; skipped link update"
 else
-    BASE="https://sourceforge.net/projects/xlnux/files/iso"
+    BASE="https://sourceforge.net/projects/equislinux/files/iso"
     if [[ "$DRY_RUN" == "1" ]]; then
         log "dry-run: would update $RELEASES to $VERSION"
     else
@@ -156,7 +156,7 @@ fi
 
 # ── Optional: verify the public download ────────────────────────────────────
 if [[ "$VERIFY" == "1" && "$DRY_RUN" != "1" && "$UPLOAD" == "1" ]]; then
-    URL="https://sourceforge.net/projects/xlnux/files/iso/$NAME/download"
+    URL="https://sourceforge.net/projects/equislinux/files/iso/$NAME/download"
     log "waiting for SourceForge to publish $URL"
     for _ in $(seq 1 40); do
         code="$(curl -s -o /dev/null -w '%{http_code}' -IL "$URL" || true)"

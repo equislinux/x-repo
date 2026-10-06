@@ -8,7 +8,7 @@ web release index in one step:
    `../../keys/env.sh` / `X_REPO_SIGN_KEY`);
 3. renders `README.md` from `scripts/iso-README.template.md`;
 4. uploads with rsync to
-   `xscriptor@frs.sourceforge.net:/home/frs/project/xlnux/iso` and removes the
+   `xscriptor@frs.sourceforge.net:/home/frs/project/equislinux/iso` and removes the
    previous `x-*.iso` versions;
 5. updates `web/data/releases.json` (`releases[0]`).
 
@@ -24,7 +24,7 @@ scripts/publish-iso.sh --verify # additionally waits and hashes the public downl
 Options: `--iso PATH`, `--web-dir DIR`, `--dry-run`, `--no-upload`, `--verify`.
 Environment: `SF_USER` (default `xscriptor`), `SF_KEY` (default
 `~/.ssh/id_ed25519_sourceforge`), `SF_PATH` (default
-`/home/frs/project/xlnux/iso`), `X_ISO_DATE`.
+`/home/frs/project/equislinux/iso`), `X_ISO_DATE`.
 
 The SourceForge account needs the SSH key registered and write access to the
 `equislinux` project. Signing material stays in the workspace `keys/` directory and
