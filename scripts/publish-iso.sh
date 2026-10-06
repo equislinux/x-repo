@@ -158,12 +158,21 @@ fi
 if [[ "$VERIFY" == "1" && "$DRY_RUN" != "1" && "$UPLOAD" == "1" ]]; then
     URL="https://sourceforge.net/projects/equislinux/files/iso/$NAME/download"
     log "waiting for SourceForge to publish $URL"
+    ready=0
     for _ in $(seq 1 40); do
-        code="$(curl -s -o /dev/null -w '%{http_code}' -IL "$URL" || true)"
-        [[ "$code" == "200" ]] && break
+        info="$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -I "$URL" || true)"
+        code="${info%% *}"
+        target="${info#* }"
+        # While SourceForge is still processing the upload the URL 301s to the
+        # project page; when released it 302s to a downloads.sourceforge.net
+        # mirror. Never trust a 200 HTML body as the ISO.
+        if [[ "$code" == "302" && "$target" == *downloads.sourceforge.net* ]]; then
+            ready=1
+            break
+        fi
         sleep 30
     done
-    [[ "$code" == "200" ]] || die "download still not available ($code)"
+    [[ "$ready" == "1" ]] || die "download still not released ($code -> $target)"
     tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
     curl -fsSL -o "$tmp" "$URL"
     [[ "$(sha256sum "$tmp" | awk '{print $1}')" == "$SHA" ]] || die "downloaded ISO hash mismatch"
