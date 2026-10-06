@@ -22,7 +22,7 @@ Download `x-@VERSION@-x86_64.iso`, `SHA256SUMS`, `SHA256SUMS.sig`, the ISO
 detached signature and `signing.pub`:
 
 ```bash
-curl -LO https://xlnux.github.io/x-repo/repo/x86_64/signing.pub
+curl -LO https://equislinux.github.io/x-repo/repo/x86_64/signing.pub
 gpg --import signing.pub
 gpg --verify x-@VERSION@-x86_64.iso.sig x-@VERSION@-x86_64.iso
 gpg --verify SHA256SUMS.sig SHA256SUMS
@@ -30,6 +30,6 @@ sha256sum -c SHA256SUMS
 ```
 
 Stable download page (always points to the newest release):
-<https://xlnux.github.io/web/download/latest/>
+<https://equislinux.github.io/web/download/latest/>
 
 SHA-256: `@SHA256@`

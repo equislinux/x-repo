@@ -1,7 +1,7 @@
 # Portal web
 
 El portal es una **página estática de Next.js** con dos bloques: los enlaces a todos
-los repositorios de la organización `xlnux` (animados con `XDecryptedText`) y una
+los repositorios de la organización `equislinux` (animados con `XDecryptedText`) y una
 explicación breve, en inglés, de que este repositorio sirve artefactos para X Linux.
 No hay navbar, temas ni formularios: el sitio es una sola ruta (`/`) que se exporta
 estáticamente y se despliega en GitHub Pages junto a los paquetes.
@@ -25,7 +25,7 @@ La librería `@xscriptor/xcomponents` no incluye sus utilidades Tailwind, así q
 | Ruta | Rol |
 |---|---|
 | `app/layout.tsx` | Layout raíz: metadatos y fuente Anonymous Pro. |
-| `app/page.tsx` | Única ruta: enlaces animados a los repos de `xlnux` y explicación. |
+| `app/page.tsx` | Única ruta: enlaces animados a los repos de `equislinux` y explicación. |
 | `app/globals.css` | Entrada de Tailwind, paleta X, `@source` y fuente. |
 
 ## Export estático y despliegue
@@ -43,8 +43,8 @@ commitean (ver [publishing.md](publishing.md)); el export copia `public/` comple
 `out/`, así que el repositorio `[x]` y el endpoint `.xp` se publican en el mismo
 sitio:
 
-- `out/repo/x86_64/...` → `https://xlnux.github.io/x-repo/repo/x86_64/...`
-- `out/x/x86_64/...` → `https://xlnux.github.io/x-repo/x/x86_64/...`
+- `out/repo/x86_64/...` → `https://equislinux.github.io/x-repo/repo/x86_64/...`
+- `out/x/x86_64/...` → `https://equislinux.github.io/x-repo/x/x86_64/...`
 - `public/.nojekyll` evita el procesado de Jekyll.
 
 Publicar un paquete sigue siendo: reconstruir el repo localmente, commitear los

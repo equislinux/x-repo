@@ -50,7 +50,7 @@ Estos paquetes se construyen hoy desde su `PKGBUILD` con `build-packages.sh`.
 ### x-scripts: artefacto importado, sin fuente aquí
 
 `x-scripts` **no** se construye en este repositorio. Su `PKGBUILD` vive en el repo
-hermano `xlnux/scripts` bajo `scripts/packaging/` y empaqueta todo el payload de
+hermano `equislinux/scripts` bajo `scripts/packaging/` y empaqueta todo el payload de
 aprovisionamiento (fases, CLI `x`, configs). El tarball resultante se construye allí y
 se **importa** a este repo, commiteado bajo `public/repo/x86_64/` (actualmente
 `x-scripts-0.1.0-23-any.pkg.tar.zst`).
@@ -85,7 +85,7 @@ Los clientes configuran el repositorio en `pacman.conf` como:
 
 ```
 [x]
-Server = https://xlnux.github.io/x-repo/repo/x86_64
+Server = https://equislinux.github.io/x-repo/repo/x86_64
 ```
 
 ### Cómo se actualiza la base de datos (repo-add)
@@ -117,8 +117,8 @@ sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | so
 Endpoint complementario para `xpm`. Contiene paquetes `.xp` (`xpkg`, `xpm`,
 `x-release`), su propia base de datos (`x.db.tar.gz`, `x.files.tar.gz`),
 `signing.pub`/`trustedkeys.gpg` y un `SHA256SUMS`. Fue generado por el workflow nativo
-desactivado y se sirve en `https://xlnux.github.io/x-repo/x/x86_64/`. La URL de
-repositorio documentada para `xpm` es `https://xlnux.github.io/x-repo/x/$arch`.
+desactivado y se sirve en `https://equislinux.github.io/x-repo/x/x86_64/`. La URL de
+repositorio documentada para `xpm` es `https://equislinux.github.io/x-repo/x/$arch`.
 
 ## build-packages.sh
 

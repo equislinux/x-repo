@@ -24,7 +24,7 @@ part is published.
 
 - PKGBUILD packages: `makepkg --sign --key "$X_REPO_SIGN_KEY"` (or let
   `build-packages.sh` do it: it passes the flag when the variable is set).
-- `.xp` packages: `xpkg sign` (see `xlnux/xpkg` `docs/SIGNING.md`).
+- `.xp` packages: `xpkg sign` (see `equislinux/xpkg` `docs/SIGNING.md`).
 
 Both produce a detached `.sig` next to the package.
 
@@ -46,7 +46,7 @@ prints a warning.
 ```ini
 [x]
 SigLevel = Required DatabaseOptional
-Server = https://xlnux.github.io/x-repo/repo/x86_64
+Server = https://equislinux.github.io/x-repo/repo/x86_64
 ```
 
 Keyring bootstrap (before switching to `Required`):
@@ -58,7 +58,7 @@ sudo pacman-key --lsign-key "$KEYID"
 ```
 
 For `xpm`: put the binary keyring at `/etc/xpm/gnupg/trustedkeys.gpg` and set
-`sig_level = "required"` (documented in `xlnux/xpm`).
+`sig_level = "required"` (documented in `equislinux/xpm`).
 
 ## 4. ISO/target integration (done)
 

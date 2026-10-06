@@ -49,15 +49,15 @@ jobs:
         run: |
           set -euo pipefail
           pacman -Sy --noconfirm --needed rust cargo git openssl pkgconf
-          cargo install --git https://github.com/xlnux/xpkg --locked xpkg
+          cargo install --git https://github.com/equislinux/xpkg --locked xpkg
 
       - name: Clone source repositories
         run: |
           set -euo pipefail
           mkdir -p /tmp/x-native-src
 
-          git clone --depth 1 https://github.com/xlnux/xpm.git /tmp/x-native-src/xpm
-          git clone --depth 1 https://github.com/xlnux/xpkg.git /tmp/x-native-src/xpkg
+          git clone --depth 1 https://github.com/equislinux/xpm.git /tmp/x-native-src/xpm
+          git clone --depth 1 https://github.com/equislinux/xpkg.git /tmp/x-native-src/xpkg
           git clone --depth 1 https://github.com/xfetch-cli/xfetch.git /tmp/x-native-src/xfetch
           git clone --depth 1 https://github.com/xscriptor/xclock.git /tmp/x-native-src/xclock
 

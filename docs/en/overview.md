@@ -1,6 +1,6 @@
 # Overview
 
-`xlnux/x-repo` is the **X package repository + web portal** repository of the X Linux
+`equislinux/x-repo` is the **X package repository + web portal** repository of the X Linux
 ecosystem. It has two roles that live side by side in the same repo:
 
 1. **Binary package repository** — prebuilt X packages and the pacman database are
@@ -15,18 +15,18 @@ only thing the deploy workflow does is rebuild the website and publish the whole
 `public/` tree to GitHub Pages. See [web-portal.md](web-portal.md) and
 [publishing.md](publishing.md).
 
-## Role within the xlnux organization
+## Role within the equislinux organization
 
-`x-repo` is one of five repositories of the **xlnux** organization. Each repo has a
+`x-repo` is one of five repositories of the **equislinux** organization. Each repo has a
 single, clear role:
 
 | Repository | Role |
 |---|---|
-| `xlnux/x` | The distro. ArchISO profile, ISO/installer build and system branding. |
-| `xlnux/scripts` | Provisioning payload and user setup. Ships the `x` CLI and builds the `x-scripts` package. |
-| `xlnux/xpkg` | Rust package builder. Produces native `.xp` packages from `XBUILD` files. |
-| `xlnux/xpm` | Rust package manager, the native counterpart of pacman. |
-| `xlnux/x-repo` | **Binary package repository + web portal** (this repository). |
+| `equislinux/x` | The distro. ArchISO profile, ISO/installer build and system branding. |
+| `equislinux/scripts` | Provisioning payload and user setup. Ships the `x` CLI and builds the `x-scripts` package. |
+| `equislinux/xpkg` | Rust package builder. Produces native `.xp` packages from `XBUILD` files. |
+| `equislinux/xpm` | Rust package manager, the native counterpart of pacman. |
+| `equislinux/x-repo` | **Binary package repository + web portal** (this repository). |
 
 Two packaging paths coexist in the ecosystem:
 
