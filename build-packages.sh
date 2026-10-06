@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # Usage: ./build-packages.sh [--index-only]
 #
-#   (no flags)    rebuild every PKGBUILD package (x-release, x-dev, opencode-bin),
+#   (no flags)    rebuild every PKGBUILD package (x-release, x-dev, opencode-bin, xfetch, xtop),
 #                 import the sibling x-scripts build when present, regenerate the
 #                 database.
 #   --index-only  skip the local builds and only import/regenerate the repo
@@ -74,6 +74,8 @@ if [[ "$BUILD" == "1" ]]; then
     build_pkgbuild x-release
     build_pkgbuild x-dev
     build_pkgbuild opencode-bin
+    build_pkgbuild xfetch
+    build_pkgbuild xtop
 else
     echo "== Skipping local builds (--index-only) =="
 fi
@@ -92,7 +94,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in x-release x-dev opencode-bin; do
+    for dir in x-release x-dev opencode-bin xfetch xtop; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"
@@ -108,6 +110,16 @@ echo "== Regenerating pacman database =="
 # Full rebuild from the tarballs present in the directory: this also drops
 # entries for packages that no longer exist (repo-add -n would keep them).
 cd "$REPO_DIR"
+# X_REPO_REMOVE: package names whose DB entries/files must be dropped (renames,
+# e.g. xfetch-git -> xfetch-bin). Comma/space separated.
+if [[ -n "${X_REPO_REMOVE:-}" ]]; then
+    for old in $X_REPO_REMOVE; do
+        echo "  removing '$old' (renamed/retired)"
+        rm -f "${old}"-*.pkg.tar.zst "${old}"-*.pkg.tar.zst.sig
+        repo-remove x.db.tar.gz "$old"
+    done
+fi
+
 rm -f x.db x.files x.db.tar.gz x.files.tar.gz x.db.tar.gz.old x.files.tar.gz.old
 if [[ -n "$SIGN_KEY" ]]; then
     # Sign every package payload too (makepkg --sign only covers the locally
