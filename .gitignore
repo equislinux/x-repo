@@ -33,3 +33,7 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# makepkg working dirs (never commit; srcdir contains upstream git clones)
+packages/*/src/
+packages/*/pkg/
