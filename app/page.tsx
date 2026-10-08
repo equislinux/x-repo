@@ -24,7 +24,7 @@ export default function Home() {
           rel="noreferrer"
           className="text-sm tracking-[0.3em] text-X-gray transition-colors hover:text-X-cyan"
         >
-          GITHUB.COM/XLNUX
+          GITHUB.COM/EQUISLINUX
         </a>
         <ul className="space-y-4">
           {REPOS.map((repo) => (
