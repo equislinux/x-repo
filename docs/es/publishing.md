@@ -41,9 +41,9 @@ de build. También puedes colocar el tarball directamente en
 
 ### Paquetes nativos .xp (vía xpm/xpkg)
 
-El endpoint `.xp` bajo `public/x/x86_64/` queda fuera del alcance de este flujo: el
-workflow nativo automatizado está desactivado y se conserva como referencia en
-`docs/build-x-native-workflow.md`.
+El endpoint `.xp` bajo `public/x/x86_64/` se genera aparte con
+`scripts/build-xp.sh` (builds de xpkg + firma gpg + `xpkg repo-add`) y se despliega con
+el mismo workflow de Pages; ver `docs/build-x-native-workflow.md`.
 
 ## 2. Regenerar el repositorio (repo-add)
 
@@ -125,9 +125,8 @@ Los paquetes actualizados quedan servidos en:
 ### Advertencias
 
 - No ejecutes dos workflows de deploy de Pages a la vez; se sobrescribirían el
-  despliegue mutuamente (en `build.yml` hay un grupo de concurrencia `pages`, y
-  `docs/build-x-native-workflow.md` avisa de lo mismo para el workflow nativo, que está
-  desactivado).
+  despliegue mutuamente (en `build.yml` hay un grupo de concurrencia `pages`; el
+  endpoint nativo se regenera con `scripts/build-xp.sh` y va en el mismo deploy).
 - Mantén el repositorio sincronizado con sus consumidores: `x-release` y `x-dev` se
   instalan desde este repo durante la instalación de la distro X, y `x-scripts` debe
   coincidir con la revisión del payload que espera el instalador.

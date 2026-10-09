@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "repo": "x",
+  "arch": "x86_64",
+  "packages": {
+    "opencode-bin": [
+      {
+        "version": "1.18.34-1",
+        "filename": "opencode-bin-1.18.34-1-x86_64.xp",
+        "sha256": "f68610ec1f69d94a877f573b56a7f2f77e8f6019fadbce75c27074cd6cf3c3f0",
+        "builddate": 1791570183,
+        "source": {
+          "url": "opencode-bin-1.18.34.tar.gz::https://github.com/anomalyco/opencode/releases/download/v1.18.34/opencode-linux-x64.tar.gz",
+          "sha256": "0f22479647226d1d2dd99595d20082ee7bda3870b62dc6a90b41efc1a71d7e9a"
+        }
+      }
+    ],
+    "x-dev": [
+      {
+        "version": "1.0-2",
+        "filename": "x-dev-1.0-2-any.xp",
+        "sha256": "29880f998860205eb2cccfaf84c149d09f991a2b3970f366fb0cd6092f4cc955",
+        "builddate": 1791570182,
+        "source": {
+          "url": "https://xscriptor.io/x"
+        }
+      }
+    ],
+    "x-release": [
+      {
+        "version": "1.0-8",
+        "filename": "x-release-1.0-8-any.xp",
+        "sha256": "b50e3c5931ff74077be5978c5adcce6a73e0cc4ad5fed6ba472179d206012900",
+        "builddate": 1791570181,
+        "source": {
+          "url": "https://xscriptor.io/x"
+        }
+      }
+    ],
+    "x-scripts": [
+      {
+        "version": "0.1.0-36",
+        "filename": "x-scripts-0.1.0-36-any.xp",
+        "sha256": "8bfb3e09a5d7057fad6db9627d06a3ef9ebfabfff3cdc01cf88d3c3ee359d877",
+        "builddate": 1791570306,
+        "source": {
+          "url": "https://github.com/equislinux/scripts"
+        }
+      }
+    ],
+    "xfetch-bin": [
+      {
+        "version": "1.0.0-1",
+        "filename": "xfetch-bin-1.0.0-1-x86_64.xp",
+        "sha256": "d21e673fdf77bbf6f97ba20f2f50ef45925aee475b59896cae5b8a15b66fe95a",
+        "builddate": 1791570253,
+        "source": {
+          "url": "xfetch-1.0.0-x86_64-unknown-linux-gnu.tar.gz::https://github.com/xfetch-cli/xfetch/releases/download/v1.0.0/xfetch-1.0.0-x86_64-unknown-linux-gnu.tar.gz",
+          "sha256": "19259c15cb527f00f29197a753812e9c8b14e276b48e9d61d0d09db7a151d395"
+        }
+      }
+    ],
+    "xpkg": [
+      {
+        "version": "0.1.0-1",
+        "filename": "xpkg-0.1.0-1-x86_64.xp",
+        "sha256": "b82a8faa79e89c01f2807934d213709b20ae6ca5010a8603b459f2003c2b9f37",
+        "builddate": 1791570177,
+        "source": {
+          "url": "https://github.com/equislinux/xpkg"
+        }
+      }
+    ],
+    "xpm": [
+      {
+        "version": "0.1.0-3",
+        "filename": "xpm-0.1.0-3-x86_64.xp",
+        "sha256": "a6be0535a8ac44c06329167bae5a99d2faf99765ceda965cdb335a4479157ea9",
+        "builddate": 1791570114,
+        "source": {
+          "url": "https://github.com/equislinux/xpm"
+        }
+      }
+    ],
+    "xtop-git": [
+      {
+        "version": "r35.cb17bb7-1",
+        "filename": "xtop-git-r35.cb17bb7-1-x86_64.xp",
+        "sha256": "04455a50ee623fd0e2a91c26348d2a7144b746dd1c366b0c78f957b8762e4686",
+        "builddate": 1791570304,
+        "source": {
+          "url": "git+https://github.com/xtop-cli/xtop.git"
+        }
+      }
+    ]
+  }
+}
