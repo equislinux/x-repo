@@ -22,8 +22,7 @@ ambos, además de los archivos propios del paquete.
 - `PKGBUILD` — descriptor de fuente compatible con Arch. Se construye con `makepkg` y
   produce un `.pkg.tar.zst` para el repositorio de **pacman**.
 - `XBUILD` — descriptor nativo para la vía **xpkg/xpm**, produce un paquete `.xp`.
-  El workflow nativo que lo consumía está desactivado; se conserva como referencia en
-  `docs/build-x-native-workflow.md`.
+  Lo construye y publica `scripts/build-xp.sh` (ver `docs/build-x-native-workflow.md`).
 
 El README señala que mientras `PKGBUILD` se mantiene para el tooling legacy de Arch,
 `XBUILD` es la vía nativa para `xpkg`/`xpm`.
@@ -60,14 +59,11 @@ se **importa** a este repo, commiteado bajo `public/repo/x86_64/` (actualmente
   `0.1.0-23` (el snapshot del escritorio equisdots). `build-packages.sh` importa el
   build hermano automáticamente; vuelve a ejecutarlo al republicar el payload.
 
-### Artefactos preconstruidos, sin fuentes
+### Solo recetas
 
-- `packages/xpm/`, `packages/xpkg/` — binarios `.xp` commiteados (con archivos `.sig`).
-- `packages/xfetch/`, `packages/xtop/` — binarios `.pkg.tar.zst` commiteados.
-
-Son restos de la vía de empaquetado nativa, no fuentes. El workflow nativo que los
-regeneraba desde repos upstream está desactivado (ver
-`docs/build-x-native-workflow.md`).
+`packages/*/` guarda recetas de build (`PKGBUILD`, `XBUILD` y auxiliares); los
+binarios viven solo en los repositorios generados (`public/repo/x86_64` para pacman,
+`public/x/x86_64` para xpm).
 
 ## public/repo/x86_64/ — el repositorio [x] de pacman
 
@@ -115,9 +111,11 @@ sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | so
 ## public/x/x86_64/ — endpoint nativo .xp
 
 Endpoint complementario para `xpm`. Contiene paquetes `.xp` (`xpkg`, `xpm`,
-`x-release`), su propia base de datos (`x.db.tar.gz`, `x.files.tar.gz`),
-`signing.pub`/`trustedkeys.gpg` y un `SHA256SUMS`. Fue generado por el workflow nativo
-desactivado y se sirve en `https://equislinux.github.io/x-repo/x/x86_64/`. La URL de
+`x-release`, `x-dev`, `xfetch-bin`, `xtop-git`, `opencode-bin`, `x-scripts`), su
+propia base de datos (`x.db.tar.gz`, `x.files.tar.gz` + copias `x.db`/`x.files`),
+firmas por archivo, `history.json`, `signing.pub`/`trustedkeys.gpg` y un
+`SHA256SUMS`. Se regenera con `scripts/build-xp.sh` y se despliega con el mismo
+workflow de Pages. Se sirve en `https://equislinux.github.io/x-repo/x/x86_64/`. La URL de
 repositorio documentada para `xpm` es `https://equislinux.github.io/x-repo/x/$arch`.
 
 ## build-packages.sh

@@ -1,146 +1,56 @@
-# Native Package Manager Workflow (Pending)
+# Native .xp endpoint workflow
 
-This document preserves the former `build-x-native.yml` workflow. It is kept for
-future reference and is **not** used right now.
+The `.xp` endpoint (`public/x/x86_64/`) is the native package channel consumed by
+`xpm`. It is a **parallel** channel to the pacman `[x]` repository: the distro keeps
+installing from `[x]`, while `xpm` can install the X packages as native `.xp`.
 
-## Status
+## Generate it
 
-- **Pending**: to be re-enabled when the native package manager (`xpm`/`xpkg`)
-  is ready for production.
-- Packages for the `[x]` pacman repository are currently built locally and
-  committed to `public/repo/x86_64/`. See `build-packages.sh`.
-- The website deploy workflow (`build.yml`) publishes the committed files to
-  GitHub Pages without rebuilding packages.
-
-## Original Workflow
-
-Name: Build X Native Repo & Deploy Web
-
-Triggers on `workflow_dispatch`. It builds native `.xp` packages from source
-(`xpm`, `xpkg`, `xfetch`, `xclock`), publishes them to `public/x/x86_64/`,
-and deploys the website to GitHub Pages.
-
-```yaml
-name: Build X Native Repo & Deploy Web
-
-on:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages-x-native"
-  cancel-in-progress: false
-
-jobs:
-  build-x-native:
-    runs-on: ubuntu-latest
-    container: archlinux:base-devel
-    steps:
-      - name: Checkout x-repo
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Install build toolchain
-        run: |
-          set -euo pipefail
-          pacman -Sy --noconfirm --needed rust cargo git openssl pkgconf
-          cargo install --git https://github.com/equislinux/xpkg --locked xpkg
-
-      - name: Clone source repositories
-        run: |
-          set -euo pipefail
-          mkdir -p /tmp/x-native-src
-
-          git clone --depth 1 https://github.com/equislinux/xpm.git /tmp/x-native-src/xpm
-          git clone --depth 1 https://github.com/equislinux/xpkg.git /tmp/x-native-src/xpkg
-          git clone --depth 1 https://github.com/xfetch-cli/xfetch.git /tmp/x-native-src/xfetch
-          git clone --depth 1 https://github.com/xscriptor/xclock.git /tmp/x-native-src/xclock
-
-      - name: Build native .xp packages (xpm, xpkg, xfetch, xclock)
-        run: |
-          set -euo pipefail
-          mkdir -p /tmp/x-native-out
-
-          for project in xpm xpkg xfetch xclock; do
-            ~/.cargo/bin/xpkg build \
-              -f "/tmp/x-native-src/${project}/packaging/xpkg/XBUILD" \
-              -o /tmp/x-native-out
-          done
-
-          ls -lah /tmp/x-native-out
-
-      - name: Create x native repository endpoint
-        run: |
-          set -euo pipefail
-
-          mkdir -p public/x/x86_64
-          rm -f public/x/x86_64/*
-
-          for pkg in /tmp/x-native-out/*.xp; do
-            [ -e "$pkg" ] || { echo "No .xp packages were produced"; exit 1; }
-            cp "$pkg" public/x/x86_64/
-          done
-
-          (
-            cd public/x/x86_64
-            rm -f x.db* x.files* || true
-            repo-add -n -R x.db.tar.gz *.xp
-            rm -f x.db x.files
-            cp x.db.tar.gz x.db
-            cp x.files.tar.gz x.files
-          )
-
-          (
-            cd public/x/x86_64
-            rm -f SHA256SUMS SHA256SUMS.sig
-sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
-          )
-
-      - name: Upload x endpoint artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: x-native-files
-          path: public
-
-  deploy-web:
-    needs: build-x-native
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout x-repo
-        uses: actions/checkout@v4
-
-      - name: Download x endpoint artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: x-native-files
-          path: public
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Install and build website
-        run: |
-          npm ci
-          npm run build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+```bash
+# from x-repo/, after a package change or release
+scripts/build-xp.sh            # build + sign + repo-add
+scripts/build-xp.sh --no-sign  # unsigned smoke build
 ```
 
-## Notes
+Requirements: an `xpkg` binary (`XPKG_BIN`, `xpkg` in `PATH`, or
+`../xpkg/target/release/xpkg`) and, for signing, `../keys/env.sh`
+(`X_REPO_SIGN_KEY`, `GNUPGHOME`).
 
-- Both the native workflow and the website workflow deploy to GitHub Pages.
-- Do not re-enable this workflow while the website deploy workflow is active,
-  or they may overwrite each other's Pages deployment.
+The script builds:
+
+- `xpm`, `xpkg` — from their repos' `packaging/xpkg/XBUILD`
+- `x-release`, `x-dev` — from `packages/*/XBUILD`
+- `opencode-bin`, `xfetch-bin`, `xtop-git` — from `packages/*/PKGBUILD`
+- `x-scripts` — from `../scripts/packaging/PKGBUILD`
+
+then assembles `public/x/x86_64/`: `.xp` + `.sig` per package, `x.db.tar.gz` /
+`x.files.tar.gz` via `xpkg repo-add` (plus flat `x.db`/`x.files` copies), `history.json`,
+`signing.pub`, `trustedkeys.gpg` and a signed `SHA256SUMS`.
+
+## Publish
+
+Commit `public/x/x86_64/` and push, then run the Pages deploy workflow
+(`build.yml`, `workflow_dispatch`). The endpoint is served at
+`https://equislinux.github.io/x-repo/x/x86_64/`.
+
+## Consume with xpm
+
+```ini
+[[repo]]
+name = "x"
+server = ["https://equislinux.github.io/x-repo/x/$arch"]
+```
+
+```bash
+xpm sync
+xpm search x-release
+xpm install x-release
+```
+
+## History
+
+The endpoint was originally produced by a `build-x-native.yml` GitHub workflow
+(`workflow_dispatch`, `archlinux:base-devel` container, `cargo install --git` of
+`xpkg`, `repo-add`, Pages deploy) that built xpm/xpkg/xfetch/xclock. It was disabled
+when the native tooling moved to the local `build-xp.sh` flow; the original workflow
+definition is preserved in this file's git history.
