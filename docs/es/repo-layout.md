@@ -44,7 +44,10 @@ El README señala que mientras `PKGBUILD` se mantiene para el tooling legacy de 
   `provides`/`conflicts` `opencode`; el tarball va verificado por checksum en el
   PKGBUILD.
 
-Estos paquetes se construyen hoy desde su `PKGBUILD` con `build-packages.sh`.
+Los artefactos del repo pacman `[x]` se construyen con `build-packages.sh`
+(`makepkg` + `repo-add`); el endpoint nativo `.xp` se construye con
+`scripts/build-xp.sh` (`xpkg`). Las recetas usan `PKGBUILD` (compatible Arch) o
+`XBUILD` (nativo).
 
 ### x-scripts: artefacto importado, sin fuente aquí
 
@@ -52,11 +55,11 @@ Estos paquetes se construyen hoy desde su `PKGBUILD` con `build-packages.sh`.
 hermano `equislinux/scripts` bajo `scripts/packaging/` y empaqueta todo el payload de
 aprovisionamiento (fases, CLI `x`, configs). El tarball resultante se construye allí y
 se **importa** a este repo, commiteado bajo `public/repo/x86_64/` (actualmente
-`x-scripts-0.1.0-23-any.pkg.tar.zst`).
+`x-scripts-0.1.0-36-any.pkg.tar.zst`).
 
 - No existe un directorio de fuente `packages/x-scripts/` aquí.
 - El artefacto publicado y el `PKGBUILD` de `scripts/packaging/` están alineados en
-  `0.1.0-23` (el snapshot del escritorio equisdots). `build-packages.sh` importa el
+  `0.1.0-36` (el payload de aprovisionamiento actual). `build-packages.sh` importa el
   build hermano automáticamente; vuelve a ejecutarlo al republicar el payload.
 
 ### Solo recetas
@@ -73,7 +76,7 @@ Este directorio es el repositorio orientado a pacman. Archivos presentes:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Base de datos de paquetes (`x.db` es la copia sin comprimir de `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | Base de datos de listas de archivos para `pacman -F`. |
-| `*.pkg.tar.zst` | Los paquetes: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-23`, `xpm-0.1.0-3`. |
+| `*.pkg.tar.zst` | Los paquetes: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums de todos los archivos del directorio. |
 | `signing.pub`, `trustedkeys.gpg` | Material de firma/confianza consumido por el endpoint nativo. |
 
@@ -105,7 +108,8 @@ sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | so
   directorio, así que también se eliminan entradas de paquetes que ya no existen.
 - `x.db`/`x.files` son copias planas de los `.tar.gz` para que pacman pueda leerlos
   directamente.
-- Hoy no se pasa bandera de firma, así que la base se regenera sin firmar.
+- Con `X_REPO_SIGN_KEY` definida, `repo-add -s` firma la base y todos los artefactos
+  (ver `signing.md`); sin clave, el repo se publica sin firmar y se avisa por stderr.
 - `SHA256SUMS` se regenera a partir de todos los archivos del directorio.
 
 ## public/x/x86_64/ — endpoint nativo .xp

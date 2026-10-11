@@ -42,7 +42,9 @@ native path for `xpkg`/`xpm`.
   `x agent` users get a working agent without AUR. `provides`/`conflicts`
   `opencode`; the tarball is checksummed in the PKGBUILD.
 
-These packages are built by `build-packages.sh` from their `PKGBUILD` today.
+The pacman `[x]` artifacts are built with `build-packages.sh` (`makepkg` +
+`repo-add`); the native `.xp` endpoint is built with `scripts/build-xp.sh`
+(`xpkg`). Recipes use `PKGBUILD` (Arch-compatible) or `XBUILD` (native).
 
 ### x-scripts: imported artifact, no source here
 
@@ -50,11 +52,11 @@ These packages are built by `build-packages.sh` from their `PKGBUILD` today.
 repo `equislinux/scripts` under `scripts/packaging/` and packages the whole provisioning
 payload (phases, CLI `x`, configs). The resulting tarball is built there and **imported**
 into this repo, committed under `public/repo/x86_64/` (currently
-`x-scripts-0.1.0-23-any.pkg.tar.zst`).
+`x-scripts-0.1.0-36-any.pkg.tar.zst`).
 
 - There is no `packages/x-scripts/` source directory here.
 - The published artifact and the `PKGBUILD` in `scripts/packaging/` are aligned at
-  `0.1.0-23` (the equisdots desktop snapshot). `build-packages.sh` imports the
+  `0.1.0-36` (the current provisioning payload). `build-packages.sh` imports the
   sibling build automatically; re-run it when republishing the payload.
 
 ### Recipes only
@@ -71,7 +73,7 @@ This directory is the pacman-facing repository. Files present:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Package database (`x.db` is the uncompressed copy of `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | File-list database for `pacman -F`. |
-| `*.pkg.tar.zst` | The packages: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-23`, `xpm-0.1.0-3`. |
+| `*.pkg.tar.zst` | The packages: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums over every file in the directory. |
 | `signing.pub`, `trustedkeys.gpg` | Signing/trust material consumed by the native endpoint. |
 
@@ -103,7 +105,9 @@ sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | so
   so entries for packages that no longer exist are dropped too.
 - `x.db`/`x.files` are plain copies of the `.tar.gz` files so pacman can read them
   directly.
-- No signing flag is passed today, so the database is regenerated unsigned.
+- With `X_REPO_SIGN_KEY` set, `repo-add -s` signs the database and every artifact
+  (see `signing.md`); without a key the repository is published unsigned and a
+  warning is printed.
 - `SHA256SUMS` is regenerated from every file in the directory.
 
 ## public/x/x86_64/ — native .xp endpoint

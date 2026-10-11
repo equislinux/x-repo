@@ -3,9 +3,9 @@
 <div align="center">
   <p><b>A minimalistic Linux Spin based on Arch</b></p>
   <p>
-    <a href="https://xscriptor.io/x">Website</a> •
-    <a href="https://xscriptor.io/x/docs">Documentation</a> •
-    <a href="https://xscriptor.io/x/download">Download</a>
+    <a href="https://equislinux.github.io/web/">Website</a> •
+    <a href="https://equislinux.github.io/web/en/docs/">Documentation</a> •
+    <a href="https://equislinux.github.io/web/download/latest/">Download</a>
   </p>
 </div>
 
@@ -13,8 +13,8 @@
     <img alt="License" src="https://img.shields.io/badge/license-GPL--3.0-blue.svg">
     <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white">
     <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white">
-    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/equislinux/x-repo/build.yml?branch=main&label=CI">
-    <img alt="Website" src="https://img.shields.io/badge/website-xscriptor.io-8B5CF6">
+    <img alt="Pages build" src="https://img.shields.io/github/actions/workflow/status/equislinux/x-repo/build.yml?branch=main&label=Pages">
+    <img alt="Website" src="https://img.shields.io/badge/website-equislinux.github.io%2Fweb-8B5CF6">
 </p>
 
 <hr />
@@ -76,7 +76,10 @@
 <p>It builds the PKGBUILD packages, refreshes <code>public/repo/x86_64/</code> and regenerates the pacman database. Then commit and run the deploy workflow (see <code>docs/publishing.md</code>).</p>
 
 <blockquote>
-  <b>Note:</b> While <code>PKGBUILD</code> is kept for legacy Arch tooling, <code>XBUILD</code> is the native path for <code>xpkg</code> and <code>xpm</code>. The native workflow is pending.
+  <b>Note:</b> Both build paths are live: <code>build-packages.sh</code> builds the
+  <code>PKGBUILD</code> packages with <code>makepkg</code> for the pacman <code>[x]</code> repo,
+  and <code>scripts/build-xp.sh</code> builds the <code>XBUILD</code>/<code>PKGBUILD</code> set
+  with <code>xpkg</code> for the native <code>.xp</code> endpoint consumed by <code>xpm</code>.
 </blockquote>
 
 <hr />
