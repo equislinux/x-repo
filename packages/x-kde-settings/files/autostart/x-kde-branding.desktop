@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=X Plasma branding
+Comment=Apply the X global theme on first login
+Exec=sh -c 'if [ ! -f "$HOME/.config/x-kde-branding-done" ]; then plasma-apply-lookandfeel -a org.x.desktop && touch "$HOME/.config/x-kde-branding-done"; fi'
+OnlyShowIn=KDE;
+Terminal=false
+NoDisplay=true

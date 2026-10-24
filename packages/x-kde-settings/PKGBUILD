@@ -1,13 +1,13 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=x-kde-settings
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="X Linux branding for KDE Plasma (colors, look-and-feel, wallpaper, SDDM theme)"
 arch=('any')
 url="https://xscriptor.io/x"
 license=('GPL-3.0-or-later')
 depends=('plasma-workspace' 'sddm' 'breeze' 'x-release')
-backup=('etc/xdg/kdeglobals')
+backup=('etc/xdg/kdeglobals' 'etc/skel/.config/kdeglobals')
 source=()
 md5sums=()
 
@@ -16,6 +16,10 @@ package() {
         "$pkgdir/usr/share/color-schemes/XDark.colors"
     install -Dm644 "$startdir/files/kdeglobals" \
         "$pkgdir/etc/xdg/kdeglobals"
+    install -Dm644 "$startdir/files/skel/.config/kdeglobals" \
+        "$pkgdir/etc/skel/.config/kdeglobals"
+    install -Dm644 "$startdir/files/autostart/x-kde-branding.desktop" \
+        "$pkgdir/etc/xdg/autostart/x-kde-branding.desktop"
 
     local lf="$startdir/files/look-and-feel/org.x.desktop"
     install -Dm644 "$lf/metadata.json" \
