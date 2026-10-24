@@ -1,0 +1,17 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "dev@xscriptor.com",
+                "Name": "Xscriptor"
+            }
+        ],
+        "Category": "",
+        "Description": "X Dark — X Linux branding for KDE Plasma",
+        "Id": "org.x.desktop",
+        "License": "GPL-3.0-or-later",
+        "Name": "X Dark",
+        "Website": "https://xscriptor.io/x"
+    }
+}
