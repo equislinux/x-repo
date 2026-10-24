@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "dev@xscriptor.com",
+                "Name": "Xscriptor"
+            }
+        ],
+        "Id": "X",
+        "License": "MIT",
+        "Name": "X"
+    }
+}

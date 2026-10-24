@@ -73,6 +73,7 @@ if [[ "$BUILD" == "1" ]]; then
     echo "== Building packages locally =="
     build_pkgbuild x-release
     build_pkgbuild x-dev
+    build_pkgbuild x-kde-settings
     build_pkgbuild opencode-bin
     build_pkgbuild xfetch
     build_pkgbuild xtop
@@ -94,7 +95,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in x-release x-dev opencode-bin xfetch xtop; do
+    for dir in x-release x-dev x-kde-settings opencode-bin xfetch xtop; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"

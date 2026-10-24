@@ -1,0 +1,50 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+pkgname=x-kde-settings
+pkgver=1.0
+pkgrel=1
+pkgdesc="X Linux branding for KDE Plasma (colors, look-and-feel, wallpaper, SDDM theme)"
+arch=('any')
+url="https://xscriptor.io/x"
+license=('GPL-3.0-or-later')
+depends=('plasma-workspace' 'sddm' 'breeze' 'x-release')
+backup=('etc/xdg/kdeglobals')
+source=()
+md5sums=()
+
+package() {
+    install -Dm644 "$startdir/files/XDark.colors" \
+        "$pkgdir/usr/share/color-schemes/XDark.colors"
+    install -Dm644 "$startdir/files/kdeglobals" \
+        "$pkgdir/etc/xdg/kdeglobals"
+
+    local lf="$startdir/files/look-and-feel/org.x.desktop"
+    install -Dm644 "$lf/metadata.json" \
+        "$pkgdir/usr/share/plasma/look-and-feel/org.x.desktop/metadata.json"
+    install -Dm644 "$lf/contents/defaults" \
+        "$pkgdir/usr/share/plasma/look-and-feel/org.x.desktop/contents/defaults"
+    install -Dm644 "$lf/contents/layouts/org.kde.plasma.desktop-layout.js" \
+        "$pkgdir/usr/share/plasma/look-and-feel/org.x.desktop/contents/layouts/org.kde.plasma.desktop-layout.js"
+    install -Dm644 "$lf/contents/previews/preview.png" \
+        "$pkgdir/usr/share/plasma/look-and-feel/org.x.desktop/contents/previews/preview.png"
+    install -Dm644 "$lf/contents/previews/fullscreenpreview.jpg" \
+        "$pkgdir/usr/share/plasma/look-and-feel/org.x.desktop/contents/previews/fullscreenpreview.jpg"
+
+    install -Dm644 "$startdir/files/wallpapers/X/metadata.json" \
+        "$pkgdir/usr/share/wallpapers/X/metadata.json"
+    install -Dm644 "$startdir/files/wallpapers/X/contents/images/3840x2160.jpg" \
+        "$pkgdir/usr/share/wallpapers/X/contents/images/3840x2160.jpg"
+
+    install -Dm644 "$startdir/files/sddm/theme/Main.qml" \
+        "$pkgdir/usr/share/sddm/themes/x/Main.qml"
+    install -Dm644 "$startdir/files/sddm/theme/metadata.desktop" \
+        "$pkgdir/usr/share/sddm/themes/x/metadata.desktop"
+    install -Dm644 "$startdir/files/sddm/theme/theme.conf" \
+        "$pkgdir/usr/share/sddm/themes/x/theme.conf"
+    install -Dm644 "$startdir/files/sddm/z-disable-virtualkbd.conf" \
+        "$pkgdir/etc/sddm.conf.d/z-disable-virtualkbd.conf"
+
+    install -Dm644 /dev/stdin "$pkgdir/etc/sddm.conf.d/10-x-theme.conf" <<'EOF'
+[Theme]
+Current=x
+EOF
+}
