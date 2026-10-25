@@ -16,7 +16,17 @@ All notable changes to the x-repo project will be documented in this file.
 - **Version alignment**: `XBUILD` releases for `x-release` (8) and `x-dev` (2)
   now match their `PKGBUILD`s.
 
+### Added
+- **x-kde-settings**: X Plasma branding package with the `XDark` color scheme,
+  `org.x.desktop` look-and-feel, X wallpaper package and the static X SDDM
+  theme. Published as 1.0-1 to the signed `[x]` repository.
+
 ### Changed
+- **x-kde-settings 1.0-2**: ships `/etc/skel/.config/kdeglobals` and a
+  first-login Plasma autostart that applies the X global theme; bundled in the
+  desktop test ISO (not published yet).
+- **build-packages.sh**: builds `x-kde-settings` alongside `x-release` and
+  `x-dev`.
 - **Signing**: the `[x]` repository is required on the live ISO and the
   installed target (key shipped at `/etc/pacman.d/x-repo.pub`); only the build
   host keeps `SigLevel = Never`.
