@@ -1,7 +1,7 @@
 [package]
 name = "x-release"
 version = "1.0"
-release = 8
+release = 9
 description = "X Linux identity and branding files"
 url = "https://xscriptor.io/x"
 license = ["MIT"]
@@ -9,6 +9,7 @@ arch = ["any"]
 
 [dependencies]
 depends = ["filesystem"]
+optdepends = ["x-wallpapers: desktop wallpapers (not needed on headless systems)"]
 
 [source]
 urls = []
@@ -54,7 +55,10 @@ if [[ -f "$OS_RELEASE_SRC" ]]; then
 	install -Dm644 "$OS_RELEASE_SRC" /usr/lib/os-release
 fi
 
-if [[ -f "$GRUB_SRC" ]] && [[ -d /etc/default ]]; then
+# Only systems with GRUB installed get its defaults. GRUB creates
+# /etc/default/grub when the package is installed, so headless systems
+# (no grub package, e.g. WSL) are left untouched.
+if [[ -f "$GRUB_SRC" ]] && { [[ -e /etc/default/grub ]] || [[ -d /boot/grub ]]; }; then
 	install -Dm644 "$GRUB_SRC" /etc/default/grub
 fi
 
@@ -93,8 +97,7 @@ install -Dm644 /dev/stdin "$PKGDIR/usr/share/pixmaps/x.svg" <<'EOF'
 </svg>
 EOF
 
-# Branding assets (wallpaper, logo)
-install -Dm644 "$startdir/files/x-wallpaper.png" "$PKGDIR/usr/share/backgrounds/x/x-wallpaper.png"
+# Branding assets (logo; wallpapers live in x-wallpapers)
 install -Dm644 "$startdir/files/x-logo.png" "$PKGDIR/usr/share/pixmaps/x-logo.png"
 
 # Pacman hooks: re-apply branding after filesystem/grub upgrades
@@ -121,6 +124,6 @@ Target = grub
 [Action]
 Description = Applying X branding to GRUB...
 When = PostTransaction
-Exec = /bin/sh -c "install -Dm644 /usr/share/x-release/grub /etc/default/grub; grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true"
+Exec = /bin/sh -c "if [ -e /etc/default/grub ]; then install -Dm644 /usr/share/x-release/grub /etc/default/grub; fi; if [ -d /boot/grub ] && command -v grub-mkconfig >/dev/null 2>&1; then grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true; fi"
 EOF
 """

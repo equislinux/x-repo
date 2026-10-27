@@ -29,10 +29,15 @@ native path for `xpkg`/`xpm`.
 
 ### Buildable packages (PKGBUILD)
 
-- **`x-release`** — X Linux identity and branding (PKGBUILD `1.0-8`). Ships the
-  `os-release` template, GRUB defaults, distributor logo, wallpapers and the
+- **`x-release`** — X Linux identity and branding (PKGBUILD `1.0-9`). Ships the
+  `os-release` template, GRUB defaults, distributor logo and the
   `x-release-apply` tool, plus pacman hooks (`99-x-os-release.hook`,
   `99-x-grub.hook`) that re-apply branding after `filesystem`/`grub` upgrades.
+  GRUB handling is optional (`/boot/grub` guard), so the package is safe on
+  headless systems such as WSL; wallpapers live in `x-wallpapers` (optdepends).
+- **`x-wallpapers`** — desktop wallpapers (PKGBUILD `1.0-1`). Installs
+  `/usr/share/backgrounds/x/x-wallpaper.{png,jpg}`. Kept separate so headless
+  installs do not carry the images.
 - **`x-dev`** — development environment package (PKGBUILD `1.0-2`). Installs
   `/usr/bin/x-dev-env` and helpers under `/usr/share/x-dev/` (shell aliases,
   NVIDIA/QEMU/Node setup scripts). Depends on `zsh git base-devel curl wget`.
@@ -73,7 +78,7 @@ This directory is the pacman-facing repository. Files present:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Package database (`x.db` is the uncompressed copy of `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | File-list database for `pacman -F`. |
-| `*.pkg.tar.zst` | The packages: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | The packages: `x-release-1.0-9`, `x-wallpapers-1.0-1`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums over every file in the directory. |
 | `signing.pub`, `trustedkeys.gpg` | Signing/trust material consumed by the native endpoint. |
 

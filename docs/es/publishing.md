@@ -56,10 +56,10 @@ Desde la raíz del repositorio ejecuta:
 
 El script:
 
-1. Reconstruye los paquetes PKGBUILD configurados (`x-release`, `x-dev`) con
+1. Reconstruye los paquetes PKGBUILD configurados (`x-release`, `x-wallpapers`, `x-dev`) con
    `makepkg` salvo con `--index-only`.
 2. Importa `../scripts/packaging/x-scripts-*.pkg.tar.zst` cuando existe y copia los
-   tarballs recién construidos de `x-release`/`x-dev` a `public/repo/x86_64/`,
+   tarballs recién construidos de `x-release`/`x-wallpapers`/`x-dev` a `public/repo/x86_64/`,
    borrando solo esos artefactos de build. Los binarios commiteados bajo
    `packages/xpm`, `packages/xpkg`, `packages/xfetch` y `packages/xtop` no se tocan.
 3. Reconstruye la base de datos de pacman desde cero a partir de todos los tarballs

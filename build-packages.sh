@@ -6,7 +6,8 @@ set -euo pipefail
 #
 # Usage: ./build-packages.sh [--index-only]
 #
-#   (no flags)    rebuild every PKGBUILD package (x-release, x-dev, opencode-bin, xfetch, xtop),
+#   (no flags)    rebuild every PKGBUILD package (x-release, x-wallpapers,
+#                 x-dev, opencode-bin, xfetch, xtop),
 #                 import the sibling x-scripts build when present, regenerate the
 #                 database.
 #   --index-only  skip the local builds and only import/regenerate the repo
@@ -40,7 +41,7 @@ for arg in "$@"; do
     case "$arg" in
         --index-only) BUILD=0 ;;
         -h|--help)
-            sed -n '2,17p' "$SELF" | sed 's/^# \{0,1\}//'
+            sed -n '2,26p' "$SELF" | sed 's/^# \{0,1\}//'
             exit 0
             ;;
         *)
@@ -72,6 +73,7 @@ build_xbuild() {
 if [[ "$BUILD" == "1" ]]; then
     echo "== Building packages locally =="
     build_pkgbuild x-release
+    build_pkgbuild x-wallpapers
     build_pkgbuild x-dev
     build_pkgbuild x-kde-settings
     build_pkgbuild opencode-bin
@@ -95,7 +97,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in x-release x-dev x-kde-settings opencode-bin xfetch xtop; do
+    for dir in x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"
