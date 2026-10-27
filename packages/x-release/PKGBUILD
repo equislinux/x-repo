@@ -1,12 +1,13 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=x-release
 pkgver=1.0
-pkgrel=8
+pkgrel=9
 pkgdesc="X Linux identity and branding files"
 arch=('any')
 url="https://xscriptor.io/x"
 license=('MIT')
 install=x-release.install
+optdepends=('x-wallpapers: desktop wallpapers (not needed on headless systems)')
 source=('distributor-logo.svg')
 md5sums=('SKIP')
 
@@ -41,12 +42,12 @@ GRUB_DISABLE_RECOVERY=true
 EOF
 
     install -Dm644 "distributor-logo.svg" "$pkgdir/usr/share/pixmaps/x.svg"
-    install -Dm644 "$startdir/files/x-wallpaper.png" "$pkgdir/usr/share/backgrounds/x/x-wallpaper.png"
-    install -Dm644 "$startdir/files/backgrounds/x/x-wallpaper.jpg" "$pkgdir/usr/share/backgrounds/x/x-wallpaper.jpg"
     install -Dm644 "$startdir/files/x-logo.png" "$pkgdir/usr/share/pixmaps/x-logo.png"
     install -Dm755 "$startdir/files/x-release-apply" "$pkgdir/usr/bin/x-release-apply"
 
-    # Pacman hooks: re-apply branding after filesystem/grub upgrades
+    # Pacman hooks: re-apply branding after filesystem/grub upgrades.
+    # GRUB is optional (headless systems such as WSL do not ship it): the hook
+    # only acts when GRUB is installed, and x-release-apply has the same guard.
     install -d "$pkgdir/etc/pacman.d/hooks"
     install -Dm644 /dev/stdin "$pkgdir/etc/pacman.d/hooks/99-x-os-release.hook" <<'EOF'
 [Trigger]
@@ -71,6 +72,6 @@ Target = grub
 [Action]
 Description = Applying X branding to GRUB...
 When = PostTransaction
-Exec = /bin/sh -c "install -Dm644 /usr/share/x-release/grub /etc/default/grub; grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true"
+Exec = /bin/sh -c "if [ -e /etc/default/grub ]; then install -Dm644 /usr/share/x-release/grub /etc/default/grub; fi; if [ -d /boot/grub ] && command -v grub-mkconfig >/dev/null 2>&1; then grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true; fi"
 EOF
 }

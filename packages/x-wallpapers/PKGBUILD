@@ -1,0 +1,17 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+pkgname=x-wallpapers
+pkgver=1.0
+pkgrel=1
+pkgdesc="X Linux desktop wallpapers"
+arch=('any')
+url="https://xscriptor.io/x"
+license=('MIT')
+source=()
+md5sums=()
+
+package() {
+    install -Dm644 "$startdir/files/x-wallpaper.png" \
+        "$pkgdir/usr/share/backgrounds/x/x-wallpaper.png"
+    install -Dm644 "$startdir/files/backgrounds/x/x-wallpaper.jpg" \
+        "$pkgdir/usr/share/backgrounds/x/x-wallpaper.jpg"
+}

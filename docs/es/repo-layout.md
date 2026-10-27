@@ -29,11 +29,16 @@ El README señala que mientras `PKGBUILD` se mantiene para el tooling legacy de 
 
 ### Paquetes construibles (PKGBUILD)
 
-- **`x-release`** — identidad y branding de X Linux (PKGBUILD `1.0-8`). Incluye la
-  plantilla `os-release`, defaults de GRUB, logo de distribución, fondos y la
+- **`x-release`** — identidad y branding de X Linux (PKGBUILD `1.0-9`). Incluye la
+  plantilla `os-release`, defaults de GRUB, logo de distribución y la
   herramienta `x-release-apply`, además de hooks de pacman (`99-x-os-release.hook`,
   `99-x-grub.hook`) que reaplican el branding tras actualizaciones de
-  `filesystem`/`grub`.
+  `filesystem`/`grub`. Lo de GRUB es opcional (guarda `/boot/grub`), así que el
+  paquete es seguro en sistemas headless como WSL; los fondos viven en
+  `x-wallpapers` (optdepends).
+- **`x-wallpapers`** — fondos de escritorio (PKGBUILD `1.0-1`). Instala
+  `/usr/share/backgrounds/x/x-wallpaper.{png,jpg}`. Va aparte para que las
+  instalaciones headless no carguen las imágenes.
 - **`x-dev`** — paquete de entorno de desarrollo (PKGBUILD `1.0-2`). Instala
   `/usr/bin/x-dev-env` y helpers bajo `/usr/share/x-dev/` (aliases de shell, scripts
   de setup de NVIDIA/QEMU/Node). Depende de `zsh git base-devel curl wget`.
@@ -76,7 +81,7 @@ Este directorio es el repositorio orientado a pacman. Archivos presentes:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Base de datos de paquetes (`x.db` es la copia sin comprimir de `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | Base de datos de listas de archivos para `pacman -F`. |
-| `*.pkg.tar.zst` | Los paquetes: `x-release-1.0-8`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | Los paquetes: `x-release-1.0-9`, `x-wallpapers-1.0-1`, `x-dev-1.0-2`, `x-scripts-0.1.0-36`, `xpm-0.1.0-3`, `xfetch-bin-1.0.0-1`, `xtop-git-r35.cb17bb7-1`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums de todos los archivos del directorio. |
 | `signing.pub`, `trustedkeys.gpg` | Material de firma/confianza consumido por el endpoint nativo. |
 

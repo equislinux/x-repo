@@ -1,0 +1,20 @@
+[package]
+name = "x-wallpapers"
+version = "1.0"
+release = 1
+description = "X Linux desktop wallpapers"
+url = "https://xscriptor.io/x"
+license = ["MIT"]
+arch = ["any"]
+
+[dependencies]
+depends = []
+
+[source]
+urls = []
+
+[build]
+package = """
+install -Dm644 "$startdir/files/x-wallpaper.png" "$PKGDIR/usr/share/backgrounds/x/x-wallpaper.png"
+install -Dm644 "$startdir/files/backgrounds/x/x-wallpaper.jpg" "$PKGDIR/usr/share/backgrounds/x/x-wallpaper.jpg"
+"""

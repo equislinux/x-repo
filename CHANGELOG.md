@@ -5,10 +5,19 @@ All notable changes to the x-repo project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **x-wallpapers 1.0-1**: desktop wallpapers split out of `x-release`, so
+  headless installs (e.g. WSL) can install the X identity without the images.
+  `x-release` lists it as an optdepend.
 - **xfetch-git / xtop-git**: first signed publication of the X system tools
   (`xscriptordev/xfetch`, `xscriptordev/xtop`); installed by the X base.
 - **x-scripts 0.1.0-23**: published signed (LICENSE MIT + audited deps); the
   0.1.0-22 artifact is retired.
+
+### Changed
+- **x-release 1.0-9**: GRUB defaults and `99-x-grub.hook` only touch the system
+  when `/boot/grub` exists, so installing it on a headless system (WSL) no
+  longer writes `/etc/default/grub`. systemd-boot entry branding is unchanged.
+
 
 ### Fixed
 - **`SHA256SUMS`**: no longer includes its own hash or its stale signature
