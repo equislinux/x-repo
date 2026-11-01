@@ -72,6 +72,7 @@ build_xbuild() {
 # --- pacman-facing packages (committed to public/repo) ---
 if [[ "$BUILD" == "1" ]]; then
     echo "== Building packages locally =="
+    build_pkgbuild xpm
     build_pkgbuild x-release
     build_pkgbuild x-wallpapers
     build_pkgbuild x-dev
@@ -97,7 +98,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
+    for dir in xpm x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"
