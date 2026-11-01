@@ -1,0 +1,27 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+pkgname=xpm
+pkgver=0.1.0
+pkgrel=4
+pkgdesc="Modern Rust-based package manager for X Distribution"
+arch=('x86_64')
+url="https://xscriptor.io/x"
+license=('GPL-3.0-or-later')
+depends=('glibc')
+makedepends=('cargo' 'gcc' 'rust')
+source=()
+md5sums=()
+
+build() {
+    cd "$startdir/../../../xpm"
+    # makepkg's distro LDFLAGS break ring's bundled assembly archive when the
+    # final binary is linked; rust/cargo uses its own linker configuration.
+    env -u LDFLAGS -u CFLAGS -u CXXFLAGS cargo build --release --locked -p xpm
+}
+
+package() {
+    local src="$startdir/../../../xpm"
+    install -Dm755 "$src/target/release/xpm" "$pkgdir/usr/bin/xpm"
+    install -Dm644 "$src/LICENSE" "$pkgdir/usr/share/licenses/xpm/LICENSE"
+    install -Dm644 "$src/README.md" "$pkgdir/usr/share/doc/xpm/README.md"
+    install -Dm644 "$src/etc/xpm.conf.example" "$pkgdir/usr/share/xpm/xpm.conf.example"
+}
