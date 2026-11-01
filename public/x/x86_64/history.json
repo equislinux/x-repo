@@ -7,8 +7,8 @@
       {
         "version": "1.18.34-1",
         "filename": "opencode-bin-1.18.34-1-x86_64.xp",
-        "sha256": "430c7b14ce93718c05090c4af6b9b27bba9c0af71d57fd63f212f639699ffb82",
-        "builddate": 1793567667,
+        "sha256": "d70436b8a53b722faaa31cbc3062e79bdbff39043ea98b46274a82264342a705",
+        "builddate": 1793570889,
         "source": {
           "url": "opencode-bin-1.18.34.tar.gz::https://github.com/anomalyco/opencode/releases/download/v1.18.34/opencode-linux-x64.tar.gz",
           "sha256": "0f22479647226d1d2dd99595d20082ee7bda3870b62dc6a90b41efc1a71d7e9a"
@@ -19,8 +19,8 @@
       {
         "version": "1.0-2",
         "filename": "x-dev-1.0-2-any.xp",
-        "sha256": "82f581dd8fd1db34a36da3a323ff59412aa6409ad10d47cf40f9564748a1c2e2",
-        "builddate": 1793567664,
+        "sha256": "086743dd455bdebb592e9bb49d136ed319e766732dbe38b13ea06d111e8a672f",
+        "builddate": 1793570887,
         "source": {
           "url": "https://xscriptor.io/x"
         }
@@ -30,8 +30,8 @@
       {
         "version": "1.0-9",
         "filename": "x-release-1.0-9-any.xp",
-        "sha256": "68845af3a1848211a3327972545ede4abc7939cdc5f84c4a45708f898c53616d",
-        "builddate": 1793567664,
+        "sha256": "17cc7d07cbe9b09ee0f096e1795a039cae6929a300acbe40d7d32a0eb2c62b59",
+        "builddate": 1793570887,
         "source": {
           "url": "https://xscriptor.io/x"
         }
@@ -41,8 +41,8 @@
       {
         "version": "0.1.0-42",
         "filename": "x-scripts-0.1.0-42-any.xp",
-        "sha256": "7fab743ce492e7b7bdf336504701d8213fe58bd1193709e7222b6212e013709f",
-        "builddate": 1793567800,
+        "sha256": "74303f1f97a0779b157a7828dd4820e759aec466f12e24d382abb37fa260d283",
+        "builddate": 1793571013,
         "source": {
           "url": "https://github.com/equislinux/scripts"
         }
@@ -52,8 +52,8 @@
       {
         "version": "1.0.0-1",
         "filename": "xfetch-bin-1.0.0-1-x86_64.xp",
-        "sha256": "8c7c498c541d44445bb4f67c43a61f0dd827bcd7a388b670d9586f8b8fffc351",
-        "builddate": 1793567744,
+        "sha256": "4e4d670781de1bb241693deef11020ecf047078f3261016d3887151d87417baf",
+        "builddate": 1793570959,
         "source": {
           "url": "xfetch-1.0.0-x86_64-unknown-linux-gnu.tar.gz::https://github.com/xfetch-cli/xfetch/releases/download/v1.0.0/xfetch-1.0.0-x86_64-unknown-linux-gnu.tar.gz",
           "sha256": "19259c15cb527f00f29197a753812e9c8b14e276b48e9d61d0d09db7a151d395"
@@ -64,8 +64,8 @@
       {
         "version": "0.1.0-1",
         "filename": "xpkg-0.1.0-1-x86_64.xp",
-        "sha256": "75050e2455fff4451c122fa57428a0ec810ffd880b7ccbf3eb8e398ad5958a5a",
-        "builddate": 1793567660,
+        "sha256": "dcc8e39655bda20da651a2bf9e46521bcc26c98fc3897b495a2d41791c3e1c08",
+        "builddate": 1793570884,
         "source": {
           "url": "https://github.com/equislinux/xpkg"
         }
@@ -75,8 +75,8 @@
       {
         "version": "0.1.0-4",
         "filename": "xpm-0.1.0-4-x86_64.xp",
-        "sha256": "77dd674803c3b78c69e19d9250818223ed54fb2b82a5cfb1d3b8d188f5ef4c86",
-        "builddate": 1793567579,
+        "sha256": "8e11c462b1a760f2dd7f065bb9e5e668e93bdf135ae8506f28782392335bd768",
+        "builddate": 1793570819,
         "source": {
           "url": "https://github.com/equislinux/xpm"
         }
@@ -86,8 +86,8 @@
       {
         "version": "r35.cb17bb7-1",
         "filename": "xtop-git-r35.cb17bb7-1-x86_64.xp",
-        "sha256": "999958ffe896bb87d3a7183c8804c76a3f546753d0677df66707d5c5f21c0ef1",
-        "builddate": 1793567797,
+        "sha256": "045baec776a00fbbff68aa6625b72286efac09b55575fad3a0602ab8fc5da6f3",
+        "builddate": 1793571010,
         "source": {
           "url": "git+https://github.com/xtop-cli/xtop.git"
         }
