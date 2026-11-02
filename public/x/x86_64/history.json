@@ -39,6 +39,16 @@
     ],
     "x-scripts": [
       {
+        "version": "0.1.0-43",
+        "filename": "x-scripts-0.1.0-43-any.xp",
+        "sha256": "0be4515506cc53f1cec3b82fc5809d5ba7a5bc6670c99ccb4a04f0f7464ae3d7",
+        "sig": "x-scripts-0.1.0-43-any.xp.sig",
+        "builddate": 1793652219,
+        "source": {
+          "url": "https://github.com/equislinux/scripts"
+        }
+      },
+      {
         "version": "0.1.0-42",
         "filename": "x-scripts-0.1.0-42-any.xp",
         "sha256": "74303f1f97a0779b157a7828dd4820e759aec466f12e24d382abb37fa260d283",
@@ -93,6 +103,16 @@
       }
     ],
     "xpm-aur": [
+      {
+        "version": "0.1.2-1",
+        "filename": "xpm-aur-0.1.2-1-x86_64.xp",
+        "sha256": "895d81acebf2689d388c055e2aaecb8bf6804f9cfcf917062c695b58aec66ee4",
+        "sig": "xpm-aur-0.1.2-1-x86_64.xp.sig",
+        "builddate": 1793652274,
+        "source": {
+          "url": "https://github.com/equislinux/xpm-aur"
+        }
+      },
       {
         "version": "0.1.1-1",
         "filename": "xpm-aur-0.1.1-1-x86_64.xp",

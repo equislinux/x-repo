@@ -1,6 +1,6 @@
 [package]
 name = "xpm-aur"
-version = "0.1.1"
+version = "0.1.2"
 release = 1
 description = "Rust AUR helper for X Linux using xpm for package transactions"
 url = "https://github.com/equislinux/xpm-aur"
