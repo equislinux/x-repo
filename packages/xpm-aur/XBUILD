@@ -1,0 +1,38 @@
+[package]
+name = "xpm-aur"
+version = "0.1.0"
+release = 2
+description = "Rust AUR helper for X Linux using xpm for package transactions"
+url = "https://github.com/equislinux/xpm-aur"
+license = ["GPL-3.0-or-later"]
+arch = ["x86_64"]
+
+[dependencies]
+depends = ["xpm", "pacman", "git", "xz", "gcc-libs"]
+makedepends = ["cargo", "rust"]
+optdepends = ["base-devel: build AUR packages"]
+
+[source]
+urls = []
+
+[build]
+prepare = """
+REPO_ROOT="$(cd "$startdir/../../../xpm-aur" && pwd)"
+rm -rf "$SRCDIR/xpm-aur-src"
+mkdir -p "$SRCDIR/xpm-aur-src"
+cp -a "$REPO_ROOT/Cargo.toml" "$REPO_ROOT/Cargo.lock" "$REPO_ROOT/crates" "$REPO_ROOT/docs" "$REPO_ROOT/packaging" "$REPO_ROOT/README.md" "$REPO_ROOT/LICENSE" "$SRCDIR/xpm-aur-src/"
+"""
+
+build = """
+cd "$SRCDIR/xpm-aur-src"
+env -u LDFLAGS -u CFLAGS -u CXXFLAGS cargo build --release --locked -p xpm-aur-cli
+"""
+
+package = """
+cd "$SRCDIR/xpm-aur-src"
+install -Dm755 target/release/xpm-aur "$PKGDIR/usr/bin/xpm-aur"
+install -Dm644 LICENSE "$PKGDIR/usr/share/licenses/xpm-aur/LICENSE"
+install -Dm644 README.md "$PKGDIR/usr/share/doc/xpm-aur/README.md"
+install -Dm644 docs/ARCHITECTURE.md "$PKGDIR/usr/share/doc/xpm-aur/ARCHITECTURE.md"
+install -Dm644 docs/COMPATIBILITY.md "$PKGDIR/usr/share/doc/xpm-aur/COMPATIBILITY.md"
+"""
