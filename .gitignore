@@ -41,3 +41,7 @@ packages/*/pkg/
 # xpm-aur build artifacts (published copies live in public/)
 packages/xpm-aur/*.pkg.tar.zst
 packages/xpm-aur/*.pkg.tar.zst.sig
+
+# xpm build artifacts (published copies live in public/)
+packages/xpm/*.pkg.tar.zst
+packages/xpm/*.pkg.tar.zst.sig

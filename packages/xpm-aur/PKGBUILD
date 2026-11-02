@@ -1,12 +1,12 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=xpm-aur
-pkgver=0.1.0
-pkgrel=2
+pkgver=0.1.1
+pkgrel=1
 pkgdesc="Rust AUR helper for X Linux using xpm for package transactions"
 arch=('x86_64')
 url="https://github.com/equislinux/xpm-aur"
 license=('GPL-3.0-or-later')
-depends=('xpm' 'pacman' 'git' 'xz' 'gcc-libs')
+depends=('xpm>=0.1.0-5' 'pacman' 'git' 'xz' 'gcc-libs')
 optdepends=('base-devel: build AUR packages')
 makedepends=('cargo' 'rust')
 source=()
