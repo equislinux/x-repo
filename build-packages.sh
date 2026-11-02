@@ -73,6 +73,7 @@ build_xbuild() {
 if [[ "$BUILD" == "1" ]]; then
     echo "== Building packages locally =="
     build_pkgbuild xpm
+    build_pkgbuild xpm-aur
     build_pkgbuild x-release
     build_pkgbuild x-wallpapers
     build_pkgbuild x-dev
@@ -98,7 +99,7 @@ echo "== Copying built packages to repo =="
 # under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
 # touched; import those explicitly if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in xpm x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
+    for dir in xpm xpm-aur x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
             echo "  + $pkg"
@@ -148,10 +149,13 @@ cp x.files.tar.gz x.files
 # pacman fetches x.db / x.db.sig: mirror the repo-add signature to that name.
 # x.db may be a symlink to x.db.tar.gz, in which case they are the same file.
 if [[ -n "$SIGN_KEY" && -f x.db.tar.gz.sig ]]; then
-    cp -f x.db.tar.gz.sig x.db.sig 2>/dev/null || true
+    # Replace symlinks too: GitHub Pages serves repository entries literally.
+    rm -f x.db.sig
+    cp -f x.db.tar.gz.sig x.db.sig
 fi
 if [[ -n "$SIGN_KEY" && -f x.files.tar.gz.sig ]]; then
-    cp -f x.files.tar.gz.sig x.files.sig 2>/dev/null || true
+    rm -f x.files.sig
+    cp -f x.files.tar.gz.sig x.files.sig
 fi
 # Hash the publishable artifacts. Never include SHA256SUMS itself (or its
 # stale signature): a self-referencing checksum can never verify.

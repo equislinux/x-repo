@@ -1,0 +1,29 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+pkgname=xpm-aur
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Rust AUR helper for X Linux using xpm for package transactions"
+arch=('x86_64')
+url="https://github.com/equislinux/xpm-aur"
+license=('GPL-3.0-or-later')
+depends=('xpm' 'pacman' 'git' 'xz' 'gcc-libs')
+optdepends=('base-devel: build AUR packages')
+makedepends=('cargo' 'rust')
+source=()
+md5sums=()
+
+build() {
+    cd "$startdir/../../../xpm-aur"
+    # Use rust/cargo linker settings; distro LDFLAGS can break C dependency
+    # builds used by zstd/xz.
+    env -u LDFLAGS -u CFLAGS -u CXXFLAGS cargo build --release --locked -p xpm-aur-cli
+}
+
+package() {
+    local src="$startdir/../../../xpm-aur"
+    install -Dm755 "$src/target/release/xpm-aur" "$pkgdir/usr/bin/xpm-aur"
+    install -Dm644 "$src/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "$src/README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 "$src/docs/ARCHITECTURE.md" "$pkgdir/usr/share/doc/$pkgname/ARCHITECTURE.md"
+    install -Dm644 "$src/docs/COMPATIBILITY.md" "$pkgdir/usr/share/doc/$pkgname/COMPATIBILITY.md"
+}
