@@ -39,6 +39,16 @@
     ],
     "x-scripts": [
       {
+        "version": "0.1.0-44",
+        "filename": "x-scripts-0.1.0-44-any.xp",
+        "sha256": "41e5cc198a952fc1185db92b0ba3305d87127a5e222ce17244a9b4018ac0b0e9",
+        "sig": "x-scripts-0.1.0-44-any.xp.sig",
+        "builddate": 1793659246,
+        "source": {
+          "url": "https://github.com/equislinux/scripts"
+        }
+      },
+      {
         "version": "0.1.0-43",
         "filename": "x-scripts-0.1.0-43-any.xp",
         "sha256": "0be4515506cc53f1cec3b82fc5809d5ba7a5bc6670c99ccb4a04f0f7464ae3d7",
