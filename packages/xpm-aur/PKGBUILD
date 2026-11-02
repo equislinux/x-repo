@@ -1,6 +1,6 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=xpm-aur
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Rust AUR helper for X Linux using xpm for package transactions"
 arch=('x86_64')
