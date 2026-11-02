@@ -37,3 +37,7 @@ next-env.d.ts
 # makepkg working dirs (never commit; srcdir contains upstream git clones)
 packages/*/src/
 packages/*/pkg/
+
+# xpm-aur build artifacts (published copies live in public/)
+packages/xpm-aur/*.pkg.tar.zst
+packages/xpm-aur/*.pkg.tar.zst.sig
