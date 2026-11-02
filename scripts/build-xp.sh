@@ -64,7 +64,7 @@ build_pkgbuild() {
 echo "== Building native .xp packages =="
 build_xbuild "$WS/xpm/packaging/xpkg/XBUILD"
 build_xbuild "$WS/xpkg/packaging/xpkg/XBUILD"
-for d in x-release x-dev opencode-bin xfetch xtop; do
+for d in x-release x-dev opencode-bin xfetch xtop xpm-aur; do
     if [[ -f "$REPO_DIR/packages/$d/XBUILD" ]]; then
         build_xbuild "$REPO_DIR/packages/$d/XBUILD"
     else

@@ -82,6 +82,18 @@
         }
       }
     ],
+    "xpm-aur": [
+      {
+        "version": "0.1.0-2",
+        "filename": "xpm-aur-0.1.0-2-x86_64.xp",
+        "sha256": "86dc03aded589b0bdd6205ceafaab9144ee891ef22b99820181f9af9bffd00ab",
+        "sig": "xpm-aur-0.1.0-2-x86_64.xp.sig",
+        "builddate": 1793646802,
+        "source": {
+          "url": "https://github.com/equislinux/xpm-aur"
+        }
+      }
+    ],
     "xtop-git": [
       {
         "version": "r35.cb17bb7-1",
