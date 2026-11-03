@@ -1,12 +1,12 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=xpm
 pkgver=0.1.0
-pkgrel=13
+pkgrel=14
 pkgdesc="Modern Rust-based package manager for X Distribution"
 arch=('x86_64')
 url="https://xscriptor.io/x"
 license=('GPL-3.0-or-later')
-depends=('glibc' 'arch-install-scripts')
+depends=('glibc' 'arch-install-scripts' 'gnupg')
 makedepends=('cargo' 'gcc' 'rust')
 source=()
 md5sums=()
