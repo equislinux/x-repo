@@ -72,7 +72,7 @@ build_xbuild() {
 # --- pacman-facing packages (committed to public/repo) ---
 if [[ "$BUILD" == "1" ]]; then
     echo "== Refreshing xfetch to the latest GitHub release =="
-    if ! "$REPO_DIR/scripts/update-xfetch.sh"; then
+    if ! ./scripts/update-xfetch.sh; then
         echo "build-packages: warning: could not refresh xfetch; using the pinned package" >&2
     fi
 
