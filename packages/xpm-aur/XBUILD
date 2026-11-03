@@ -1,14 +1,14 @@
 [package]
 name = "xpm-aur"
-version = "0.1.2"
-release = 2
+version = "0.1.3"
+release = 1
 description = "Rust AUR helper for X Linux using xpm for package transactions"
 url = "https://github.com/equislinux/xpm-aur"
 license = ["GPL-3.0-or-later"]
 arch = ["x86_64"]
 
 [dependencies]
-depends = ["xpm>=0.1.0-6", "pacman", "git", "xz", "gcc-libs"]
+depends = ["xpm>=0.1.0-7", "pacman", "git", "xz", "gcc-libs"]
 makedepends = ["cargo", "rust"]
 optdepends = ["base-devel: build AUR packages"]
 
