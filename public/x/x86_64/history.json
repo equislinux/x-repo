@@ -70,6 +70,17 @@
     ],
     "xfetch-bin": [
       {
+        "version": "1.0.2-1",
+        "filename": "xfetch-bin-1.0.2-1-x86_64.xp",
+        "sha256": "5a79d3fbf90607abfc2c9f549c57643f433af7f3d4fde48fbf37dbfdd1e10c72",
+        "sig": "xfetch-bin-1.0.2-1-x86_64.xp.sig",
+        "builddate": 1793741069,
+        "source": {
+          "url": "xfetch-1.0.2-x86_64-unknown-linux-gnu.tar.gz::https://github.com/xfetch-cli/xfetch/releases/download/v1.0.2/xfetch-1.0.2-x86_64-unknown-linux-gnu.tar.gz",
+          "sha256": "64b232fadd3fa242948f1be616421e81a7dcd78658bca33102a904c5c6cfe243"
+        }
+      },
+      {
         "version": "1.0.0-1",
         "filename": "xfetch-bin-1.0.0-1-x86_64.xp",
         "sha256": "4e4d670781de1bb241693deef11020ecf047078f3261016d3887151d87417baf",
@@ -298,8 +309,9 @@
       {
         "version": "r35.cb17bb7-1",
         "filename": "xtop-git-r35.cb17bb7-1-x86_64.xp",
-        "sha256": "045baec776a00fbbff68aa6625b72286efac09b55575fad3a0602ab8fc5da6f3",
-        "builddate": 1793571010,
+        "sha256": "d3b235c63ce2376a7192c71cf629e3a05c6be549fa1b7df850e122fea87d5f87",
+        "sig": "xtop-git-r35.cb17bb7-1-x86_64.xp.sig",
+        "builddate": 1793741127,
         "source": {
           "url": "git+https://github.com/xtop-cli/xtop.git"
         }

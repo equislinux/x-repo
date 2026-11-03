@@ -1,9 +1,9 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
-# Official upstream prebuilt (v1.0.0): the 1.0 wasmtime/ring source build
+# Official upstream prebuilt (v1.0.2): the 1.0 wasmtime/ring source build
 # currently fails to link in this environment, and upstream ships checksummed
 # binaries. The checksum below is pinned from the release SHA256SUMS asset.
 pkgname=xfetch-bin
-pkgver=1.0.0
+pkgver=1.0.2
 pkgrel=1
 pkgdesc="Cross-platform system information fetcher with plugins, themes and daemons (official binary)"
 arch=('x86_64')
@@ -14,7 +14,7 @@ provides=('xfetch')
 conflicts=('xfetch' 'xfetch-git')
 options=('!strip')
 source=("xfetch-$pkgver-x86_64-unknown-linux-gnu.tar.gz::$url/releases/download/v$pkgver/xfetch-$pkgver-x86_64-unknown-linux-gnu.tar.gz")
-sha256sums=('19259c15cb527f00f29197a753812e9c8b14e276b48e9d61d0d09db7a151d395')
+sha256sums=('64b232fadd3fa242948f1be616421e81a7dcd78658bca33102a904c5c6cfe243')
 
 package() {
     install -Dm755 "$srcdir/xfetch" "$pkgdir/usr/bin/xfetch"
