@@ -93,6 +93,16 @@
     ],
     "xpm": [
       {
+        "version": "0.1.0-10",
+        "filename": "xpm-0.1.0-10-x86_64.xp",
+        "sha256": "4bbfc22f6fd4ab545b54f491f09dc392ea3471da4c07756c93e5a1342a179858",
+        "sig": "xpm-0.1.0-10-x86_64.xp.sig",
+        "builddate": 1793689624,
+        "source": {
+          "url": "https://github.com/equislinux/xpm"
+        }
+      },
+      {
         "version": "0.1.0-8",
         "filename": "xpm-0.1.0-8-x86_64.xp",
         "sha256": "0b1110ca99c86aee2dcdfdfc747e7fbd5ed7e7f0b8b635312b41ece6b4d46210",
@@ -143,6 +153,16 @@
       }
     ],
     "xpm-aur": [
+      {
+        "version": "0.1.3-3",
+        "filename": "xpm-aur-0.1.3-3-x86_64.xp",
+        "sha256": "cbaeb97dba75ba0c714f5564a07a68bf042cf754362253addb466f186ce400a0",
+        "sig": "xpm-aur-0.1.3-3-x86_64.xp.sig",
+        "builddate": 1793689188,
+        "source": {
+          "url": "https://github.com/equislinux/xpm-aur"
+        }
+      },
       {
         "version": "0.1.3-2",
         "filename": "xpm-aur-0.1.3-2-x86_64.xp",
