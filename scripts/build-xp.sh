@@ -61,6 +61,15 @@ build_pkgbuild() {
     "$XPKG_BIN" build --pkgbuild -f "$1" -o "$WORK"
 }
 
+if [[ "$SIGN" -eq 0 ]]; then
+    :
+fi
+if [[ -x "$REPO_DIR/scripts/update-xfetch.sh" ]]; then
+    echo "== Refreshing xfetch to the latest GitHub release =="
+    "$REPO_DIR/scripts/update-xfetch.sh" || \
+        echo "build-xp: warning: could not refresh xfetch; using the pinned package" >&2
+fi
+
 echo "== Building native .xp packages =="
 build_xbuild "$WS/xpm/packaging/xpkg/XBUILD"
 build_xbuild "$WS/xpkg/packaging/xpkg/XBUILD"
