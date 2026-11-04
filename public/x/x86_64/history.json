@@ -225,6 +225,16 @@
     ],
     "xpm-aur": [
       {
+        "version": "0.1.3-6",
+        "filename": "xpm-aur-0.1.3-6-x86_64.xp",
+        "sha256": "10a9753f3a65527c76595665157ecbb058a2ba79cb8585c4c8737ae9ce97ca49",
+        "sig": "xpm-aur-0.1.3-6-x86_64.xp.sig",
+        "builddate": 1793777557,
+        "source": {
+          "url": "https://github.com/equislinux/xpm-aur"
+        }
+      },
+      {
         "version": "0.1.3-5",
         "filename": "xpm-aur-0.1.3-5-x86_64.xp",
         "sha256": "c3165f3aa806e081e461f216f998fce0279c7d90f769e6b0740684c993e4878d",
