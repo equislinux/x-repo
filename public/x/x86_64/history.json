@@ -124,6 +124,16 @@
     ],
     "xpm": [
       {
+        "version": "0.1.0-18",
+        "filename": "xpm-0.1.0-18-x86_64.xp",
+        "sha256": "08d7215de8511e83c7d2c689474625d5a4fa3101278b19f4a0f6346bd5204706",
+        "sig": "xpm-0.1.0-18-x86_64.xp.sig",
+        "builddate": 1793903381,
+        "source": {
+          "url": "https://github.com/equislinux/xpm"
+        }
+      },
+      {
         "version": "0.1.0-17",
         "filename": "xpm-0.1.0-17-x86_64.xp",
         "sha256": "c9ec6669f432a505aafa502f180815f26f35336b69433e574268d546383dee24",
