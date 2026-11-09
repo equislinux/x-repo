@@ -61,7 +61,7 @@ The script:
 2. Imports `../scripts/packaging/x-scripts-*.pkg.tar.zst` when present and copies the
    freshly built `x-release`/`x-wallpapers`/`x-dev` tarballs into `public/repo/x86_64/`, deleting
    only those build artifacts. The committed leftovers under `packages/xpm`,
-   `packages/xpkg`, `packages/xfetch` and `packages/xtop` are not touched.
+   `packages/xpkg` are not touched.
 3. Rebuilds the pacman database from scratch from every tarball in the directory
    (this also drops entries for packages that no longer exist):
 

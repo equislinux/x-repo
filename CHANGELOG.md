@@ -4,6 +4,22 @@ All notable changes to the x-repo project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+- **Repository cleanup (2026-11-09)**: retired the `xfetch-bin` and `xtop-git`
+  packages from `[x]` and the native `.xp` endpoint; X installs
+  `xfetch-core-bin`/`xtop-bin` from the AUR through `xpm-aur`. Removed debug
+  split packages, stale `*.pkg.tar.zst`/`*.xp` builds and `*.old.sig` files.
+- **xpm 0.1.0-27**: resolver now prefers an exact package name over `provides`,
+  supports `repo/name`, reports substitutions and checks installed/target
+  conflicts; dead code and unused dependencies removed.
+- **xpm-aur 0.1.3-9**: unused dependencies and dead code removed; rebuilt
+  against xpm 27.
+- **x-scripts 0.1.0-48**: generation reasons follow the invoking package
+  manager (`xpm`/`xpm-pre` or `pacman`/`pacman-pre`); installer network phase
+  is English.
+- **x-wallpapers 1.0-2** and **x-kde-settings 1.0-2**: new default wallpaper
+  (optimized PNG/JPEG) aligned with the current desktop.
+
 ### Added
 - **x-wallpapers 1.0-1**: desktop wallpapers split out of `x-release`, so
   headless installs (e.g. WSL) can install the X identity without the images.

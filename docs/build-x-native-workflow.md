@@ -20,7 +20,7 @@ The script builds:
 
 - `xpm`, `xpkg` — from their repos' `packaging/xpkg/XBUILD`
 - `x-release`, `x-dev` — from `packages/*/XBUILD`
-- `opencode-bin`, `xfetch-bin`, `xtop-git` — from `packages/*/PKGBUILD`
+- `opencode-bin`, `xpm-aur` — from `packages/*/PKGBUILD` or `XBUILD`
 - `x-scripts` — from `../scripts/packaging/PKGBUILD`
 
 then assembles `public/x/x86_64/`: `.xp` + `.sig` per package, `x.db.tar.gz` /
@@ -51,6 +51,6 @@ xpm install x-release
 
 The endpoint was originally produced by a `build-x-native.yml` GitHub workflow
 (`workflow_dispatch`, `archlinux:base-devel` container, `cargo install --git` of
-`xpkg`, `repo-add`, Pages deploy) that built xpm/xpkg/xfetch/xclock. It was disabled
+`xpkg`, `repo-add`, Pages deploy) that built xpm/xpkg/xclock. It was disabled
 when the native tooling moved to the local `build-xp.sh` flow; the original workflow
 definition is preserved in this file's git history.
