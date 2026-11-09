@@ -7,7 +7,7 @@ set -euo pipefail
 # Usage: ./build-packages.sh [--index-only]
 #
 #   (no flags)    rebuild every PKGBUILD package (x-release, x-wallpapers,
-#                 x-dev, opencode-bin, xfetch, xtop),
+#                 x-dev, opencode-bin, x-kde-settings),
 #                 import the sibling x-scripts build when present, regenerate the
 #                 database.
 #   --index-only  skip the local builds and only import/regenerate the repo
@@ -54,11 +54,12 @@ done
 # Packages built with PKGBUILD (makepkg) -> pacman .pkg.tar.zst
 build_pkgbuild() {
     local dir="$1"
-    echo "  - building $dir"
+    shift
+    echo "  - building $dir${*:+ ($*)}"
     if [[ -n "$SIGN_KEY" ]]; then
-        (cd "packages/$dir" && makepkg -cf --noconfirm --sign --key "$SIGN_KEY")
+        (cd "packages/$dir" && makepkg -cf --noconfirm "$@" --sign --key "$SIGN_KEY")
     else
-        (cd "packages/$dir" && makepkg -cf --noconfirm)
+        (cd "packages/$dir" && makepkg -cf --noconfirm "$@")
     fi
 }
 
@@ -71,21 +72,15 @@ build_xbuild() {
 
 # --- pacman-facing packages (committed to public/repo) ---
 if [[ "$BUILD" == "1" ]]; then
-    echo "== Refreshing xfetch to the latest GitHub release =="
-    if ! ./scripts/update-xfetch.sh; then
-        echo "build-packages: warning: could not refresh xfetch; using the pinned package" >&2
-    fi
-
     echo "== Building packages locally =="
     build_pkgbuild xpm
     build_pkgbuild xpm-aur
     build_pkgbuild x-release
     build_pkgbuild x-wallpapers
     build_pkgbuild x-dev
-    build_pkgbuild x-kde-settings
+    # Branding-only package: its dependencies are runtime (Plasma/SDDM).
+    build_pkgbuild x-kde-settings --nodeps
     build_pkgbuild opencode-bin
-    build_pkgbuild xfetch
-    build_pkgbuild xtop
 else
     echo "== Skipping local builds (--index-only) =="
 fi
@@ -101,12 +96,14 @@ done
 
 echo "== Copying built packages to repo =="
 # Only the freshly built outputs move into the repo. The committed leftovers
-# under packages/xpm, packages/xpkg, packages/xfetch and packages/xtop are NOT
-# touched; import those explicitly if you ever want them in [x].
+# under packages/xpm and packages/xpkg are NOT touched; import those explicitly
+# if you ever want them in [x].
 if [[ "$BUILD" == "1" ]]; then
-    for dir in xpm xpm-aur x-release x-wallpapers x-dev x-kde-settings opencode-bin xfetch xtop; do
+    for dir in xpm xpm-aur x-release x-wallpapers x-dev x-kde-settings opencode-bin; do
         for pkg in packages/$dir/*.pkg.tar.zst; do
             [ -f "$pkg" ] || continue
+            # Debug split packages are not part of the published repository.
+            [[ "$pkg" == *-debug-* ]] && { rm -f "$pkg" "$pkg.sig"; continue; }
             echo "  + $pkg"
             cp "$pkg" "$REPO_DIR/"
             rm -f "$pkg"
@@ -121,7 +118,7 @@ echo "== Regenerating pacman database =="
 # entries for packages that no longer exist (repo-add -n would keep them).
 cd "$REPO_DIR"
 # X_REPO_REMOVE: package names whose DB entries/files must be dropped (renames,
-# e.g. xfetch-git -> xfetch-bin). Comma/space separated.
+# e.g. old-name -> new-name). Comma/space separated.
 if [[ -n "${X_REPO_REMOVE:-}" ]]; then
     for old in $X_REPO_REMOVE; do
         echo "  removing '$old' (renamed/retired)"
@@ -130,7 +127,8 @@ if [[ -n "${X_REPO_REMOVE:-}" ]]; then
     done
 fi
 
-rm -f x.db x.files x.db.tar.gz x.files.tar.gz x.db.tar.gz.old x.files.tar.gz.old
+rm -f x.db x.files x.db.tar.gz x.files.tar.gz \
+    x.db.tar.gz.old x.db.tar.gz.old.sig x.files.tar.gz.old x.files.tar.gz.old.sig
 if [[ -n "$SIGN_KEY" ]]; then
     # Sign every package payload too (makepkg --sign only covers the locally
     # built ones; imported packages like x-scripts need this).
@@ -166,7 +164,7 @@ fi
 # stale signature): a self-referencing checksum can never verify.
 rm -f SHA256SUMS SHA256SUMS.sig
 sha256sum $(find . -maxdepth 1 -type f ! -name 'SHA256SUMS*' -printf '%P\n' | sort) > SHA256SUMS
-rm -f x.db.tar.gz.old x.files.tar.gz.old
+rm -f x.db.tar.gz.old x.db.tar.gz.old.sig x.files.tar.gz.old x.files.tar.gz.old.sig
 
 if [[ -n "$SIGN_KEY" ]]; then
     rm -f SHA256SUMS.sig trustedkeys.gpg signing.pub

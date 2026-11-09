@@ -3,7 +3,7 @@
 #
 # Sources:
 #   - xpm, xpkg  -> sibling repos' packaging/xpkg/XBUILD
-#   - x-release, x-dev, opencode-bin, xfetch-bin, xtop-git (packages/*/PKGBUILD)
+#   - x-release, x-dev, xpm-aur, opencode-bin (packages/*/PKGBUILD or XBUILD)
 #   - x-scripts  -> ../scripts/packaging/PKGBUILD
 #
 # Signs with the project key (../keys/env.sh) using gpg detached signatures and
@@ -64,16 +64,10 @@ build_pkgbuild() {
 if [[ "$SIGN" -eq 0 ]]; then
     :
 fi
-if [[ -x "$REPO_DIR/scripts/update-xfetch.sh" ]]; then
-    echo "== Refreshing xfetch to the latest GitHub release =="
-    "$REPO_DIR/scripts/update-xfetch.sh" || \
-        echo "build-xp: warning: could not refresh xfetch; using the pinned package" >&2
-fi
-
 echo "== Building native .xp packages =="
 build_xbuild "$WS/xpm/packaging/xpkg/XBUILD"
 build_xbuild "$WS/xpkg/packaging/xpkg/XBUILD"
-for d in x-release x-dev opencode-bin xfetch xtop xpm-aur; do
+for d in x-release x-dev opencode-bin xpm-aur; do
     if [[ -f "$REPO_DIR/packages/$d/XBUILD" ]]; then
         build_xbuild "$REPO_DIR/packages/$d/XBUILD"
     else
