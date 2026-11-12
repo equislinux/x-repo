@@ -1,0 +1,18 @@
+# Post-install/upgrade hooks for x-release
+
+post_install() {
+    if command -v x-release-apply >/dev/null 2>&1; then
+        x-release-apply || true
+    fi
+}
+
+post_upgrade() {
+    post_install
+}
+
+post_remove() {
+    # Regenerate GRUB so boot entries drop the X branding cleanly
+    if [ -f /boot/grub/grub.cfg ]; then
+        grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true
+    fi
+}

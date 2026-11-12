@@ -1,0 +1,46 @@
+name: Deploy Website to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Packages are built locally (see docs/build-packages.md) and committed
+  # under public/repo and public/x. This job only builds the website and
+  # deploys everything to GitHub Pages.
+  deploy-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install & Build Next.js
+        run: |
+          npm ci
+          npm run build
+
+      - name: Verify repository files exist
+        run: |
+          test -f public/repo/x86_64/x.db && echo "pacman repo db present"
+          test -f public/repo/x86_64/x-release-*.pkg.tar.zst && echo "x-release package present"
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

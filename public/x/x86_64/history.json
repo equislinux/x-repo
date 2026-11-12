@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "repo": "x",
+  "arch": "x86_64",
+  "packages": {
+    "opencode-bin": [
+      {
+        "version": "1.18.34-1",
+        "filename": "opencode-bin-1.18.34-1-x86_64.xp",
+        "sha256": "06ac0bfa537cbc1efd7fd13c7f20a4ee1c9cfb544041bc711b72de6aa503df13",
+        "builddate": 1794259330,
+        "source": {
+          "url": "opencode-bin-1.18.34.tar.gz::https://github.com/anomalyco/opencode/releases/download/v1.18.34/opencode-linux-x64.tar.gz",
+          "sha256": "0f22479647226d1d2dd99595d20082ee7bda3870b62dc6a90b41efc1a71d7e9a"
+        }
+      }
+    ],
+    "x-dev": [
+      {
+        "version": "1.0-2",
+        "filename": "x-dev-1.0-2-any.xp",
+        "sha256": "e392a01acb70bbd29a2d1a60a782ad996d8dc6934a9a242e289395cfcbe6f422",
+        "builddate": 1794259329,
+        "source": {
+          "url": "https://xscriptor.io/x"
+        }
+      }
+    ],
+    "x-release": [
+      {
+        "version": "1.0-9",
+        "filename": "x-release-1.0-9-any.xp",
+        "sha256": "532abee008089027405c8230d44ab28183215f3759cb02add6e6813ced8b9b43",
+        "builddate": 1794259329,
+        "source": {
+          "url": "https://xscriptor.io/x"
+        }
+      }
+    ],
+    "x-scripts": [
+      {
+        "version": "0.1.0-48",
+        "filename": "x-scripts-0.1.0-48-any.xp",
+        "sha256": "e3319c701a064d2507c6aff8135a2e65cfe64e065d2734711a30a046a1136660",
+        "builddate": 1794259426,
+        "source": {
+          "url": "https://github.com/equislinux/scripts"
+        }
+      }
+    ],
+    "xpkg": [
+      {
+        "version": "0.1.0-1",
+        "filename": "xpkg-0.1.0-1-x86_64.xp",
+        "sha256": "53ad7cd6636c5e69bf8ac16554b25e39cc2d5879ad3cdb72feed69513dbe7bce",
+        "builddate": 1794259326,
+        "source": {
+          "url": "https://github.com/equislinux/xpkg"
+        }
+      }
+    ],
+    "xpm": [
+      {
+        "version": "0.1.0-27",
+        "filename": "xpm-0.1.0-27-x86_64.xp",
+        "sha256": "4163f10af5f90fd035b55c69e61b0f8462f6170cc92b375a63518bc2ffc08e7a",
+        "builddate": 1794259270,
+        "source": {
+          "url": "https://github.com/equislinux/xpm"
+        }
+      }
+    ],
+    "xpm-aur": [
+      {
+        "version": "0.1.3-9",
+        "filename": "xpm-aur-0.1.3-9-x86_64.xp",
+        "sha256": "cf45b9ea152544ea47fa149de7458ae378ed7c6f8bccb8e9210095a9393cb0ea",
+        "builddate": 1794259424,
+        "source": {
+          "url": "https://github.com/equislinux/xpm-aur"
+        }
+      }
+    ]
+  }
+}

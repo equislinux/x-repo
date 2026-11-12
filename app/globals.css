@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@source "../node_modules/@xscriptor/xcomponents/dist";
+
+@theme {
+  --color-X-bg-dark: #000000;
+  --color-X-bg-light: #ffffff;
+  --color-X-text-dark: #ffffff;
+  --color-X-text-light: #000000;
+  --color-X-cyan: #00d2ff;
+  --color-X-purple: #bc13fe;
+  --color-X-pink: #ff0055;
+  --color-X-orange: #ff6b00;
+  --color-X-gold: #ffb700;
+  --color-X-gray: #888888;
+  --color-X-dark: #111111;
+  --color-X-white: #f5f5f5;
+  --color-X-green: #00ff99;
+  --color-X-yellow: #ffd700;
+
+  --font-serif: 'Hack Nerd Font', monospace;
+  --font-sans: 'Hack Nerd Font', monospace;
+  --font-mono: 'Hack Nerd Font', monospace;
+}
+
+@font-face {
+  font-family: 'Hack Nerd Font';
+  src: url('/fonts/HackNerdFont-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Hack Nerd Font', monospace;
+  @apply bg-X-bg-dark text-X-text-dark;
+}

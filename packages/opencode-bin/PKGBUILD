@@ -1,0 +1,20 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+# Official prebuilt binary of the opencode CLI, redistributed in [x] so the
+# `agents=yes` installer path and `x agent` users get a working agent.
+pkgname=opencode-bin
+pkgver=1.18.34
+pkgrel=1
+pkgdesc="The AI coding agent built for the terminal (official binary)"
+arch=('x86_64')
+url="https://github.com/anomalyco/opencode"
+license=('MIT')
+depends=('glibc' 'gcc-libs')
+provides=('opencode')
+conflicts=('opencode')
+options=('!strip' '!debug')
+source=("opencode-bin-${pkgver}.tar.gz::https://github.com/anomalyco/opencode/releases/download/v${pkgver}/opencode-linux-x64.tar.gz")
+sha256sums=('0f22479647226d1d2dd99595d20082ee7bda3870b62dc6a90b41efc1a71d7e9a')
+
+package() {
+    install -Dm755 "$srcdir/opencode" "$pkgdir/usr/bin/opencode"
+}

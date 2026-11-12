@@ -1,0 +1,77 @@
+# Maintainer: Xscriptor <dev@xscriptor.com>
+pkgname=x-release
+pkgver=1.0
+pkgrel=9
+pkgdesc="X Linux identity and branding files"
+arch=('any')
+url="https://xscriptor.io/x"
+license=('MIT')
+install=x-release.install
+optdepends=('x-wallpapers: desktop wallpapers (not needed on headless systems)')
+source=('distributor-logo.svg')
+md5sums=('SKIP')
+
+package() {
+    install -d "$pkgdir/usr/share/x-release"
+    install -Dm644 /dev/stdin "$pkgdir/usr/share/x-release/os-release" <<'EOF'
+NAME="X"
+PRETTY_NAME="X Linux"
+ID=x
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="0;36"
+HOME_URL="https://xscriptor.io/x"
+DOCUMENTATION_URL="https://xscriptor.io/x/docs"
+SUPPORT_URL="https://xscriptor.io/x/support"
+BUG_REPORT_URL="https://github.com/equislinux/x"
+LOGO=x
+EOF
+
+    install -Dm644 /dev/stdin "$pkgdir/usr/share/x-release/grub" <<'EOF'
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="X"
+GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX=""
+GRUB_PRELOAD_MODULES="part_gpt part_msdos"
+GRUB_TIMEOUT_STYLE=menu
+GRUB_TERMINAL_INPUT=console
+GRUB_GFXMODE=auto
+GRUB_GFXPAYLOAD_LINUX=keep
+GRUB_DISABLE_RECOVERY=true
+EOF
+
+    install -Dm644 "distributor-logo.svg" "$pkgdir/usr/share/pixmaps/x.svg"
+    install -Dm644 "$startdir/files/x-logo.png" "$pkgdir/usr/share/pixmaps/x-logo.png"
+    install -Dm755 "$startdir/files/x-release-apply" "$pkgdir/usr/bin/x-release-apply"
+
+    # Pacman hooks: re-apply branding after filesystem/grub upgrades.
+    # GRUB is optional (headless systems such as WSL do not ship it): the hook
+    # only acts when GRUB is installed, and x-release-apply has the same guard.
+    install -d "$pkgdir/etc/pacman.d/hooks"
+    install -Dm644 /dev/stdin "$pkgdir/etc/pacman.d/hooks/99-x-os-release.hook" <<'EOF'
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = filesystem
+
+[Action]
+Description = Applying X Linux identity to os-release...
+When = PostTransaction
+Exec = /bin/sh -c "install -Dm644 /usr/share/x-release/os-release /usr/lib/os-release"
+EOF
+
+    install -Dm644 /dev/stdin "$pkgdir/etc/pacman.d/hooks/99-x-grub.hook" <<'EOF'
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = grub
+
+[Action]
+Description = Applying X branding to GRUB...
+When = PostTransaction
+Exec = /bin/sh -c "if [ -e /etc/default/grub ]; then install -Dm644 /usr/share/x-release/grub /etc/default/grub; fi; if [ -d /boot/grub ] && command -v grub-mkconfig >/dev/null 2>&1; then grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true; fi"
+EOF
+}

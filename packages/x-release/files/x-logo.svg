@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 420" width="1024" height="840" role="img" aria-label="xlinux logo">
+  <title>xlinux</title>
+  <path d="M 206,240 L 306,90 Q 256,74 206,90 L 306,240"
+    fill="none" stroke="#0F172A" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="256" y="380" text-anchor="middle"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="58" font-weight="400" letter-spacing="5" fill="#0F172A">linux</text>
+</svg>

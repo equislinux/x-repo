@@ -1,0 +1,11 @@
+[General]
+ColorScheme=XDark
+Name=X Dark
+
+[KDE]
+LookAndFeelPackage=org.x.desktop
+SingleClick=false
+widgetStyle=Breeze
+
+[Icons]
+Theme=breeze-dark

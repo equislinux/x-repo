@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OS_RELEASE_SRC="/usr/share/x-release/os-release"
+GRUB_SRC="/usr/share/x-release/grub"
+
+if [[ -f "$OS_RELEASE_SRC" ]]; then
+  install -Dm644 "$OS_RELEASE_SRC" /usr/lib/os-release
+fi
+
+# Only systems with GRUB installed get its defaults. GRUB creates
+# /etc/default/grub when the package is installed, so headless systems
+# (no grub package, e.g. WSL) are left untouched.
+if [[ -f "$GRUB_SRC" ]] && { [[ -e /etc/default/grub ]] || [[ -d /boot/grub ]]; }; then
+  install -Dm644 "$GRUB_SRC" /etc/default/grub
+fi
+
+if command -v grub-mkconfig >/dev/null 2>&1 && [[ -d /boot/grub ]]; then
+  grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1 || true
+fi
+
+# systemd-boot keeps the distro name in its loader entries: rewrite the ones
+# that still say "Arch Linux" (no-op on systems without systemd-boot).
+for dir in /boot/loader/entries /efi/loader/entries; do
+  if [[ -d "$dir" ]]; then
+    for f in "$dir"/*.conf; do
+      [[ -f "$f" ]] || continue
+      sed -i 's/Arch Linux/X/g' "$f" 2>/dev/null || true
+    done
+  fi
+done
+
+echo "x-release: branding applied"

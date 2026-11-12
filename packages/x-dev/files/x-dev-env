@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$EUID" -eq 0 ]; then
+    echo "Run this as your regular user, not root."
+    exit 1
+fi
+
+# ── helpers ──
+log()  { echo -e "\033[1;32m[X]\033[0m $1"; }
+warn() { echo -e "\033[1;33m[!]\033[0m $1"; }
+
+run() {
+    if command -v x &>/dev/null; then
+        x "$@"
+    else
+        sudo "$@"
+    fi
+}
+
+# ── 1. x wrapper alias cleanup ──
+for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
+    [ -f "$rc" ] && sed -i '/^[[:space:]]*alias[[:space:]]*x=.*$/d' "$rc" 2>/dev/null || true
+done
+
+# ── 2. Install zsh if missing (should be handled by package deps) ──
+if ! command -v zsh &>/dev/null; then
+    log "Installing zsh..."
+    run pacman -Sy --noconfirm zsh
+fi
+
+# ── 3. Install yay (AUR helper) ──
+if command -v pacman &>/dev/null && ! command -v yay &>/dev/null; then
+    log "Installing yay..."
+    run pacman -Sy --noconfirm --needed git base-devel
+    tmpdir=$(mktemp -d)
+    git clone https://aur.archlinux.org/yay.git "$tmpdir"
+    (cd "$tmpdir" && makepkg -si --noconfirm)
+    rm -rf "$tmpdir"
+else
+    log "yay already installed"
+fi
+
+# ── 4. Set zsh as default shell ──
+if [ "$SHELL" != "$(which zsh)" ] && command -v zsh &>/dev/null; then
+    chsh -s "$(which zsh)"
+    log "Default shell set to zsh (log out/in to apply)"
+fi
+
+# ── 5. Oh My Zsh ──
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    log "Installing Oh My Zsh..."
+    export RUNZSH=no
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# ── 6. Zsh plugins ──
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+declare -A plugins=(
+    ["zsh-autosuggestions"]="https://github.com/zsh-users/zsh-autosuggestions"
+    ["zsh-syntax-highlighting"]="https://github.com/zsh-users/zsh-syntax-highlighting"
+    ["zsh-completions"]="https://github.com/zsh-users/zsh-completions"
+)
+for name in "${!plugins[@]}"; do
+    dest="$ZSH_CUSTOM/plugins/$name"
+    if [ ! -d "$dest" ]; then
+        git clone --depth=1 "${plugins[$name]}" "$dest"
+    fi
+done
+
+ZSHRC="$HOME/.zshrc"
+[ -f "$ZSHRC" ] || touch "$ZSHRC"
+
+sed -i 's/^ZSH_THEME=.*/ZSH_THEME="random"/' "$ZSHRC" || echo 'ZSH_THEME="random"' >> "$ZSHRC"
+if grep -q "^plugins=" "$ZSHRC"; then
+    sed -i 's/^plugins=.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions)/' "$ZSHRC"
+else
+    echo 'plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions)' >> "$ZSHRC"
+fi
+
+# ── 7. User shell aliases ──
+ALIASES="
+# ───── X Aliases ─────
+alias xs='sudo su'
+alias xi='sudo -i'
+alias xsh='sudo -s'
+alias xzdev='zellij --layout x'
+"
+
+GIT_ALIASES=$(cat <<'GITEOF'
+# ===== XCustom Git Aliases =====
+alias gc="git clone"
+alias ga="git add ."
+alias gcom="git commit -m"
+alias gp="git push"
+alias gpuom="git push -u origin main"
+alias gpuod="git push -u origin dev"
+alias gs="git status"
+alias gl="git log --oneline --graph --decorate"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gd="git diff"
+alias gpl="git pull"
+alias gf="git fetch"
+# ===== End =====
+GITEOF
+
+NAVIGATION_ALIASES=$(cat <<'NAVEOF'
+# ===== XCustom Navigation Aliases =====
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+alias c="clear"
+alias ll="ls -lh"
+alias la="ls -A"
+alias l="ls -CF"
+# ===== End =====
+NAVEOF
+
+for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
+    [ -f "$rc" ] || continue
+    grep -q "X Aliases" "$rc" 2>/dev/null || echo "$ALIASES" >> "$rc"
+    grep -q "XCustom Git Aliases" "$rc" 2>/dev/null || echo "$GIT_ALIASES" >> "$rc"
+    grep -q "XCustom Navigation Aliases" "$rc" 2>/dev/null || echo "$NAVIGATION_ALIASES" >> "$rc"
+done
+
+# ── 8. VSCode extensions ──
+if command -v code &>/dev/null; then
+    log "Installing VSCode extensions..."
+    code --install-extension xscriptor.x-dark-colors 2>/dev/null || warn "Failed x-dark-colors"
+    code --install-extension xscriptor.xscriptor-themes 2>/dev/null || warn "Failed xscriptor-themes"
+    code --install-extension xscriptor.xglass 2>/dev/null || warn "Failed xglass"
+fi
+
+# ── 9. Install X ecosystem tools ──
+log "Installing X tools..."
+curl -fsSL https://raw.githubusercontent.com/xfetch-cli/xfetch/main/install.sh | bash 2>/dev/null || warn "xfetch install failed"
+curl -fsSL https://raw.githubusercontent.com/xscriptor/xtop/main/install.sh | bash 2>/dev/null || warn "xtop install failed"
+
+log "Done!"
+log "Reload your shell: source ~/.zshrc"
