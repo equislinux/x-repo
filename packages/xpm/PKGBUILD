@@ -1,7 +1,7 @@
 # Maintainer: Xscriptor <dev@xscriptor.com>
 pkgname=xpm
 pkgver=0.1.0
-pkgrel=34
+pkgrel=35
 pkgdesc="Modern Rust-based package manager for X Distribution"
 arch=('x86_64')
 url="https://xscriptor.io/x"
