@@ -57,11 +57,11 @@ The pacman `[x]` artifacts are built with `build-packages.sh` (`makepkg` +
 repo `equislinux/scripts` under `scripts/packaging/` and packages the whole provisioning
 payload (phases, CLI `x`, configs). The resulting tarball is built there and **imported**
 into this repo, committed under `public/repo/x86_64/` (currently
-`x-scripts-0.1.0-48-any.pkg.tar.zst`).
+`x-scripts-0.1.0-52-any.pkg.tar.zst`).
 
 - There is no `packages/x-scripts/` source directory here.
 - The published artifact and the `PKGBUILD` in `scripts/packaging/` are aligned at
-  `0.1.0-48` (the current provisioning payload). `build-packages.sh` imports the
+  `0.1.0-52` (the current provisioning payload). `build-packages.sh` imports the
   sibling build automatically; re-run it when republishing the payload.
 
 ### Recipes only
@@ -78,7 +78,7 @@ This directory is the pacman-facing repository. Files present:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Package database (`x.db` is the uncompressed copy of `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | File-list database for `pacman -F`. |
-| `*.pkg.tar.zst` | The packages: `xpm-0.1.0-27`, `xpm-aur-0.1.3-9`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-48`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | The packages: `xpm-0.1.0-36`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-52`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums over every file in the directory. |
 | `signing.pub`, `trustedkeys.gpg` | Signing/trust material consumed by the native endpoint. |
 

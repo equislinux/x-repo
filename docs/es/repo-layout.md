@@ -60,11 +60,11 @@ Los artefactos del repo pacman `[x]` se construyen con `build-packages.sh`
 hermano `equislinux/scripts` bajo `scripts/packaging/` y empaqueta todo el payload de
 aprovisionamiento (fases, CLI `x`, configs). El tarball resultante se construye allí y
 se **importa** a este repo, commiteado bajo `public/repo/x86_64/` (actualmente
-`x-scripts-0.1.0-48-any.pkg.tar.zst`).
+`x-scripts-0.1.0-52-any.pkg.tar.zst`).
 
 - No existe un directorio de fuente `packages/x-scripts/` aquí.
 - El artefacto publicado y el `PKGBUILD` de `scripts/packaging/` están alineados en
-  `0.1.0-48` (el payload de aprovisionamiento actual). `build-packages.sh` importa el
+  `0.1.0-52` (el payload de aprovisionamiento actual). `build-packages.sh` importa el
   build hermano automáticamente; vuelve a ejecutarlo al republicar el payload.
 
 ### Solo recetas
@@ -81,7 +81,7 @@ Este directorio es el repositorio orientado a pacman. Archivos presentes:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Base de datos de paquetes (`x.db` es la copia sin comprimir de `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | Base de datos de listas de archivos para `pacman -F`. |
-| `*.pkg.tar.zst` | Los paquetes: `xpm-0.1.0-27`, `xpm-aur-0.1.3-9`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-48`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | Los paquetes: `xpm-0.1.0-36`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-52`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums de todos los archivos del directorio. |
 | `signing.pub`, `trustedkeys.gpg` | Material de firma/confianza consumido por el endpoint nativo. |
 
