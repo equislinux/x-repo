@@ -5,6 +5,10 @@ All notable changes to the x-repo project will be documented in this file.
 ## [Unreleased]
 
 ### Changed
+- **xpm 0.1.0-38**: fix `xpm bootstrap` for clean chroots: sync and verify
+  with the host keyring and copy its public material (including
+  `trustedkeys.gpg`) into the target. This repairs `xpm-aur` chroot template
+  creation when `/etc/xpm.conf` uses `gpg_dir = "/etc/pacman.d/gnupg"`.
 - **xpm 0.1.0-37**: xpm now owns its local database exclusively and never
   writes pacman's database. File conflicts are resolved across the whole
   transaction (files can move between packages, e.g. `openssl` ->
