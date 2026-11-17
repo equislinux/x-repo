@@ -5,6 +5,13 @@ All notable changes to the x-repo project will be documented in this file.
 ## [Unreleased]
 
 ### Changed
+- **xpm 0.1.0-37**: xpm now owns its local database exclusively and never
+  writes pacman's database. File conflicts are resolved across the whole
+  transaction (files can move between packages, e.g. `openssl` ->
+  `openssl-3`), upgrade cleanup keeps files claimed by other targets,
+  `xpm check --repair` rebuilds corrupted manifests from `.MTREE`, and ALPM
+  hooks query xpm through a temporary `pacman` shim so `mkinitcpio` keeps
+  working without a synced pacman database.
 - **Repository cleanup (2026-11-09)**: retired the `xfetch-bin` and `xtop-git`
   packages from `[x]` and the native `.xp` endpoint; X installs
   `xfetch-core-bin`/`xtop-bin` from the AUR through `xpm-aur`. Removed debug
