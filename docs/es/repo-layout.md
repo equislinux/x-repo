@@ -81,7 +81,7 @@ Este directorio es el repositorio orientado a pacman. Archivos presentes:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Base de datos de paquetes (`x.db` es la copia sin comprimir de `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | Base de datos de listas de archivos para `pacman -F`. |
-| `*.pkg.tar.zst` | Los paquetes: `xpm-0.1.0-36`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-53`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | Los paquetes: `xpm-0.1.0-37`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-53`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums de todos los archivos del directorio. |
 | `signing.pub`, `trustedkeys.gpg` | Material de firma/confianza consumido por el endpoint nativo. |
 

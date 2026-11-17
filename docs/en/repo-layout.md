@@ -78,7 +78,7 @@ This directory is the pacman-facing repository. Files present:
 |---|---|
 | `x.db`, `x.db.tar.gz` | Package database (`x.db` is the uncompressed copy of `x.db.tar.gz`). |
 | `x.files`, `x.files.tar.gz` | File-list database for `pacman -F`. |
-| `*.pkg.tar.zst` | The packages: `xpm-0.1.0-36`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-53`, `opencode-bin-1.18.34-1`. |
+| `*.pkg.tar.zst` | The packages: `xpm-0.1.0-37`, `xpm-aur-0.1.4-7`, `x-release-1.0-9`, `x-wallpapers-1.0-2`, `x-kde-settings-1.0-2`, `x-dev-1.0-2`, `x-scripts-0.1.0-53`, `opencode-bin-1.18.34-1`. |
 | `SHA256SUMS` | Checksums over every file in the directory. |
 | `signing.pub`, `trustedkeys.gpg` | Signing/trust material consumed by the native endpoint. |
 
