@@ -2,7 +2,7 @@
 Name=X
 Description=equisdots minimal static login (black, remembered user, white underline password, session picker and power row)
 Copyright=2026
-License=MIT
+License=GPL-3.0-or-later
 Type=sddm-theme
 Version=1.0
 MainScript=Main.qml
